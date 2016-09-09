@@ -1,0 +1,27 @@
+{
+  "env": {
+    "development": {
+      "plugins": [
+        "add-module-exports",
+        "ramda",
+        "transform-object-rest-spread",
+        "syntax-flow",
+        "tcomb",
+        "transform-flow-strip-types",
+        "istanbul"
+      ]
+    },
+    "production": {
+      "plugins": [
+        "add-module-exports",
+        "ramda",
+        "transform-object-rest-spread",
+        "syntax-flow",
+        "transform-flow-strip-types"
+      ]
+    }
+  },
+  "presets": [
+    "es2015-node4"
+  ]
+}

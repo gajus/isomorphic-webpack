@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - 6
+  - 5
+  - 4
+before_install:
+  - npm config set depth 0
+  - npm install --global npm@3
+script:
+  - NODE_ENV=development npm run build
+  - rm -fr ./dist
+  - NODE_ENV=production npm run build
+  - rm -fr ./dist
+  - npm run lint
+  - flow
+  - nyc --silent npm run test
+  - nyc report --reporter=text-lcov | coveralls
+  - nyc check-coverage --lines 90
+  - conventional-changelog-lint --from=HEAD~$(git --no-pager rev-list master..HEAD --count)
+after_success:
+  - travis-after-all && ./.scripts/release.sh
+notifications:
+  email: false
+sudo: false

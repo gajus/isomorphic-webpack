@@ -1,0 +1,13 @@
+node_modules
+coverage
+dist
+*.log
+.*
+!.conventional-changelog-lintrc
+!.gitignore
+!.npmignore
+!.babelrc
+!.travis.yml
+!.flowconfig
+!.README
+!.scripts

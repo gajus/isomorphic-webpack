@@ -1,0 +1,69 @@
+{
+  "author": {
+    "email": "gajus@gajus.com",
+    "name": "Gajus Kuizinas",
+    "url": "http://gajus.com"
+  },
+  "dependencies": {},
+  "description": "",
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-cli": "^6.11.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "^2.0.0",
+    "babel-plugin-ramda": "^1.1.5",
+    "babel-plugin-syntax-flow": "^6.13.0",
+    "babel-plugin-tcomb": "^0.3.12",
+    "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-register": "^6.11.6",
+    "conventional-changelog-cli": "^1.2.0",
+    "conventional-changelog-lint": "^1.0.1",
+    "conventional-changelog-lint-config-canonical": "^1.0.0",
+    "coveralls": "^2.11.12",
+    "eslint": "^3.3.1",
+    "eslint-config-canonical": "^1.7.16",
+    "flow-bin": "^0.31.1",
+    "gitdown": "^2.4.10",
+    "husky": "^0.11.6",
+    "nyc": "^8.1.0",
+    "standard-version": "^2.4.0",
+    "tcomb": "^3.2.13",
+    "travis-after-all": "^1.4.4"
+  },
+  "keywords": [
+    "isomorphic",
+    "universal",
+    "webpack"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "./dist/index.js",
+  "name": "isomorphic-webpack",
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "instrument": false,
+    "reporter": [
+      "text-lcov"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/isomorphic-webpack"
+  },
+  "scripts": {
+    "build": "babel ./src --out-dir ./dist --copy-files",
+    "commitmsg": "conventional-changelog-lint -e",
+    "documentation": "gitdown ./.README/README.md --output-file ./README.md",
+    "lint": "eslint ./src ./tests",
+    "precommit": "npm run lint && npm run test",
+    "test": "NODE_ENV=development ava"
+  },
+  "version": "0.0.0"
+}
