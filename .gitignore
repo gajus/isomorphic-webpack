@@ -8,6 +8,6 @@ dist
 !.npmignore
 !.babelrc
 !.travis.yml
-!.flowconfig
+!.eslintrc
 !.README
 !.scripts

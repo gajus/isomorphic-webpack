@@ -2,8 +2,8 @@
   "env": {
     "development": {
       "plugins": [
+      	"transform-export-extensions",
         "add-module-exports",
-        "ramda",
         "transform-object-rest-spread",
         "syntax-flow",
         "tcomb",
@@ -13,8 +13,8 @@
     },
     "production": {
       "plugins": [
+      	"transform-export-extensions",
         "add-module-exports",
-        "ramda",
         "transform-object-rest-spread",
         "syntax-flow",
         "transform-flow-strip-types"

@@ -1,0 +1,10 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "isOverride": {
+      "description": "A synchronous callback function used to filter `require` overriding of requests that resolve to a module. The default behavior is to filter out all requests that resolve to files with '.js' or '.json' extensions.",
+      "instanceof": "Function"
+    }
+  },
+  "type": "object"
+}
