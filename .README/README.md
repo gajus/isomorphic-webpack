@@ -7,6 +7,8 @@
 
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
+{"gitdown": "contents"}
+
 ## Goals
 
 * Only one running node process. ✅
