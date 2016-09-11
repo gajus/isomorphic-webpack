@@ -13,6 +13,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 * Only one running node process. ✅
 * Enables use of all webpack loaders. ✅
+* Server side hot reloading of modules. ✅
 
 ## Try it
 
