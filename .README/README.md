@@ -43,9 +43,15 @@ createIsomorphicWebpack(webpackConfiguration: Object, isomorphicWebpackConfigura
 
 #### Isomorphic webpack configuration
 
+There are no configuration properties available for the high-level abstraction. (I have not identified a need.)
+
+If you have a requirement for configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name,configuration%20use%20case,default%20value).
+
+<!--
 ```json
 {"gitdown": "include", "file": "./../src/schemas/isomorphicWebpackConfiguration.json"}
 ```
+-->
 
 ### Low-level abstraction
 

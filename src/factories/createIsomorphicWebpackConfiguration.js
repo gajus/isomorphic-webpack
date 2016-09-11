@@ -1,13 +1,7 @@
 // @flow
 
-const defaultIsOverride = (resolvedRequest) => {
-  return !resolvedRequest.endsWith('.js');
-};
-
 export default (userIsomorphicWebpackConfig) => {
-  const defaultIsomorphicWebpackConfig = {
-    isOverride: defaultIsOverride
-  };
+  const defaultIsomorphicWebpackConfig = {};
 
   const isomorphicWebpackConfig = userIsomorphicWebpackConfig || defaultIsomorphicWebpackConfig;
 
