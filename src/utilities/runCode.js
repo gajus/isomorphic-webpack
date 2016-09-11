@@ -10,6 +10,7 @@ export default (code: string, userOptions: Object = {}): any => {
   const window = jsdom.jsdom('<html><body></body></html>').defaultView;
 
   const sandbox = {
+    console,
     document: window.document,
     require,
     window
