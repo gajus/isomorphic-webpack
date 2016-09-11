@@ -2,11 +2,21 @@
 # isomorphic-webpack
 
 [![Travis build status](http://img.shields.io/travis/gajus/isomorphic-webpack/master.svg?style=flat-square)](https://travis-ci.org/gajus/isomorphic-webpack)
-[![Coveralls](https://img.shields.io/coveralls/gajus/isomorphic-webpack.svg?style=flat-square)](https://github.com/gajus/isomorphic-webpack)
+[![Coveralls](https://img.shields.io/coveralls/gajus/isomorphic-webpack.svg?style=flat-square)](https://coveralls.io/github/gajus/isomorphic-webpack)
 [![NPM version](http://img.shields.io/npm/v/isomorphic-webpack.svg?style=flat-square)](https://www.npmjs.org/package/isomorphic-webpack)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
+
+* [isomorphic-webpack](#isomorphic-webpack)
+    * [Goals](#isomorphic-webpack-goals)
+    * [Try it](#isomorphic-webpack-try-it)
+    * [Setup](#isomorphic-webpack-setup)
+        * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
+        * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
+    * [FAQ](#isomorphic-webpack-faq)
+        * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
+
 
 <a name="isomorphic-webpack-goals"></a>
 ## Goals
@@ -49,19 +59,20 @@ createIsomorphicWebpack(webpackConfiguration: Object, isomorphicWebpackConfigura
 <a name="isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration"></a>
 #### Isomorphic webpack configuration
 
+There are no configuration properties available for the high-level abstraction. (I have not identified a need.)
+
+If you have a requirement for configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name,configuration%20use%20case,default%20value).
+
+<!--
 ```json
 {
   "additionalProperties": false,
-  "properties": {
-    "isOverride": {
-      "description": "A synchronous callback function used to filter `require` overriding of requests that resolve to a module. The default behavior is to filter out all requests that resolve to files with '.js' or '.json' extensions.",
-      "instanceof": "Function"
-    }
-  },
+  "properties": {},
   "type": "object"
 }
 
 ```
+-->
 
 <a name="isomorphic-webpack-setup-low-level-abstraction"></a>
 ### Low-level abstraction
