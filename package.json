@@ -83,5 +83,5 @@
     "precommit": "npm run lint && npm run test",
     "test": "NODE_ENV=development ava --verbose"
   },
-  "version": "0.0.0"
+  "version": "1.0.0"
 }
