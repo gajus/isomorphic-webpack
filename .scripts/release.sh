@@ -47,7 +47,7 @@ git checkout master
 git merge $TRAVIS_COMMIT
 
 # Generate ./README.md from ./.README/README.md template.
-npm run documentation
+npm run generate-documentation
 
 git add ./README.md
 git diff-index --quiet HEAD ./README.md || git commit --no-verify -m 'docs: update documentation' ./README.md
