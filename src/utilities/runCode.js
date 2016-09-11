@@ -12,6 +12,7 @@ export default (code: string, userOptions: Object = {}): any => {
   const sandbox = {
     console,
     document: window.document,
+    ISOMORPHIC_WEBPACK: true,
     require,
     window
   };

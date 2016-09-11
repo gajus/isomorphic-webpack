@@ -122,12 +122,14 @@ export default (webpackConfiguration) => {
 
 ### How to differentiate between Node.js and browser environment?
 
-You can build a condition yourself, e.g.
+Check for presence of `ISOMORPHIC_WEBPACK` variable.
+
+Presence of `ISOMORPHIC_WEBPACK` indicates that code is executed using Node.js.
 
 ```js
-// Check if browser
-typeof process === 'undefined' || !process.release || process.release.name !== 'node'
-
-// Check if Node.js
-typeof process !== 'undefined' && process.release && process.release.name === 'node'
+if (typeof ISOMORPHIC_WEBPACK === 'undefined') {
+	// Browser
+} else {
+	// Node.js
+}
 ```
