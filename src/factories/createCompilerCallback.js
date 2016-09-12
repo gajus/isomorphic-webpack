@@ -19,9 +19,15 @@ export default (compiler: Compiler, callback: Function) => {
 
   const outputFileSystem = compiler.outputFileSystem;
 
-  return (error) => {
+  return (error, stats) => {
     if (error) {
       debug('compiler error:', error);
+
+      return;
+    }
+
+    if (stats.compilation.missingDependencies.length) {
+      debug('aborting compilation; missing dependencies', stats.compilation.missingDependencies);
 
       return;
     }
