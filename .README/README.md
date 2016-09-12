@@ -133,3 +133,13 @@ if (typeof ISOMORPHIC_WEBPACK === 'undefined') {
 	// Node.js
 }
 ```
+
+### How to enable logging?
+
+`isomorphic-webpack` is using [`debug`](https://www.npmjs.com/package/debug) to log messages.
+
+To enable logging, export `DEBUG` environment variable:
+
+```sh
+export DEBUG=isomorphic-webpack:*
+```
