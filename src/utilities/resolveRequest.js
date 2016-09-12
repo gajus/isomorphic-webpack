@@ -32,8 +32,8 @@ export default (context: string, requestMap: Object, request: string, parentFile
     return relativeTargetResourcePathWithLoaders + '.js';
   }
 
-  if (isRequestInRequestMap(relativeTargetResourcePathWithLoaders + '/index.js', requestMap)) {
-    return relativeTargetResourcePathWithLoaders + '/index.js';
+  if (isRequestInRequestMap('./' + path.join(relativeTargetResourcePathWithLoaders, 'index.js'), requestMap)) {
+    return './' + path.join(relativeTargetResourcePathWithLoaders, 'index.js');
   }
 
   throw new Error('Cannot resolve the request.');

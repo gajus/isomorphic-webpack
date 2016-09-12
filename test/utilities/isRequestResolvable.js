@@ -19,6 +19,9 @@ test('true if request path can be resolved to a resource (index)', (assert) => {
 test('true if request path can be resolved to a resource (without extension)', (assert) => {
   assert.true(isRequestResolvable('/', {'./foo/index.js': 0}, './foo/index', '/'));
 });
+test('true if request path can be resolved to a resource (directory path)', (assert) => {
+  assert.true(isRequestResolvable('/', {'./index.js': 0}, './', '/'));
+});
 test('false if request path cannot be resolved to a resource', (assert) => {
   assert.false(isRequestResolvable('/', {'./foo/index.js': 0}, './bar/index.js', '/'));
 });

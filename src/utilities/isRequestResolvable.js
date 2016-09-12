@@ -40,7 +40,7 @@ export default (context: string, requestMap: Object, request: string, parentFile
     return true;
   }
 
-  if (isRequestInRequestMap(relativeTargetResourcePath + '/index.js', requestMap)) {
+  if (isRequestInRequestMap('./' + path.join(relativeTargetResourcePath, 'index.js'), requestMap)) {
     return true;
   }
 

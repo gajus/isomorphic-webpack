@@ -19,6 +19,9 @@ test('resolves request (without extension)', (assert) => {
   assert.is(resolveRequest('/', {'./foo/index.js': 0}, './foo/index', '/'), './foo/index.js');
 });
 
+test('resolves request (directory path)', (assert) => {
+  assert.is(resolveRequest('/', {'./index.js': 0}, './', '/'), './index.js');
+});
 test('resolves request (inline loader)', (assert) => {
   assert.is(resolveRequest(__dirname, {'../../node_modules/css-loader/index.js!./../style.css': 0}, 'css!./style.css', __dirname), '../../node_modules/css-loader/index.js!./../style.css');
 });
