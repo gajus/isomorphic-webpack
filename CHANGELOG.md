@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/gajus/isomorphic-webpack/compare/v1.2.0...v1.2.1) (2016-09-12)
+
+
+### Bug Fixes
+
+* abort compilation if there are missing deps ([f074b75](https://github.com/gajus/isomorphic-webpack/commit/f074b75))
+* make ./ path resolve to ./index.js ([950c8e7](https://github.com/gajus/isomorphic-webpack/commit/950c8e7))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/gajus/isomorphic-webpack/compare/v1.1.0...v1.2.0) (2016-09-11)
 
