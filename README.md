@@ -16,6 +16,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
         * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
     * [FAQ](#isomorphic-webpack-faq)
         * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
+        * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
 
 
 <a name="isomorphic-webpack-goals"></a>
@@ -156,4 +157,15 @@ if (typeof ISOMORPHIC_WEBPACK === 'undefined') {
 } else {
 	// Node.js
 }
+```
+
+<a name="isomorphic-webpack-faq-how-to-enable-logging"></a>
+### How to enable logging?
+
+`isomorphic-webpack` is using [`debug`](https://www.npmjs.com/package/debug) to log messages.
+
+To enable logging, export `DEBUG` environment variable:
+
+```sh
+export DEBUG=isomorphic-webpack:*
 ```
