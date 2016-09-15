@@ -26,6 +26,12 @@ export default (compiler: Compiler, callback: Function) => {
       return;
     }
 
+    if (stats.compilation.errors.length) {
+      debug('compilation error', stats.compilation.errors);
+
+      return;
+    }
+
     if (stats.compilation.missingDependencies.length) {
       debug('aborting compilation; missing dependencies', stats.compilation.missingDependencies);
 
