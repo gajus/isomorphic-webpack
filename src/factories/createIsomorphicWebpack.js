@@ -84,6 +84,10 @@ export default (webpackConfiguration, userIsomorphicWebpackConfiguration) => {
     return errorStack.replace(/\(isomorphic-webpack:(\d+):(\d+)\)/g, (match, lineNumber, columnNumber) => {
       const originalPosition = getOriginalPosition(Number(lineNumber), Number(columnNumber));
 
+      if (originalPosition.source === null || originalPosition.line === null || originalPosition.column === null) {
+        return match;
+      }
+
       return '(' + originalPosition.source + ':' + originalPosition.line + ':' + originalPosition.column + ')';
     });
   };
