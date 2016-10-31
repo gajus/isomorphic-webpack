@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/gajus/isomorphic-webpack/compare/v1.3.0...v1.4.0) (2016-10-31)
+
+
+### Features
+
+* enable stack trace support (fixes [#4](https://github.com/gajus/isomorphic-webpack/issues/4)) ([2903a8b](https://github.com/gajus/isomorphic-webpack/commit/2903a8b))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/gajus/isomorphic-webpack/compare/v1.2.1...v1.3.0) (2016-09-15)
 
