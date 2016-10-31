@@ -11,10 +11,12 @@ export default (webpackConfiguration: Object): Object => {
   const manifestPath = path.resolve(webpackConfiguration.context, 'manifest.json');
 
   const compilerConfiguration = webpackMerge(webpackConfiguration, {
+    devtool: 'sourcemap',
     externals: [
       nodeExternals({
         importType: 'commonjs2'
       })
+
       // @todo
       //
       // Relative resources are not being resolved, because 'require'

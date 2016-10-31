@@ -19,6 +19,7 @@ export default (code: string, userOptions: Object = {}): any => {
 
   const options = {
     displayErrors: true,
+    filename: 'isomorphic-webpack',
     timeout: 5000,
     ...userOptions
   };

@@ -54,8 +54,11 @@ export default (compiler: Compiler, callback: Function) => {
 
     const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
 
+    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryChunkName + '.map', 'utf-8'));
+
     callback({
       bundleCode,
+      bundleSourceMap,
       requestMap
     });
   };
