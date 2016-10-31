@@ -67,6 +67,15 @@ export default (webpackConfiguration, userIsomorphicWebpackConfiguration) => {
     source: string
   |};
 
+  const isOriginalPositionDiscoverable = (lineNumber: number, columnNumber: number): boolean => {
+    const originalPosition = bundleSourceMapConsumer.originalPositionFor({
+      column: columnNumber,
+      line: lineNumber
+    });
+
+    return originalPosition.source !== null && originalPosition.line !== null && originalPosition.column !== null;
+  };
+
   const getOriginalPosition = (lineNumber: number, columnNumber: number): ErrorPositionType => {
     const originalPosition = bundleSourceMapConsumer.originalPositionFor({
       column: columnNumber,
@@ -82,11 +91,14 @@ export default (webpackConfiguration, userIsomorphicWebpackConfiguration) => {
 
   const formatErrorStack = (errorStack: string): string => {
     return errorStack.replace(/\(isomorphic-webpack:(\d+):(\d+)\)/g, (match, lineNumber, columnNumber) => {
-      const originalPosition = getOriginalPosition(Number(lineNumber), Number(columnNumber));
+      const targetLineNumber = Number(lineNumber);
+      const targetColumnNumber = Number(columnNumber);
 
-      if (originalPosition.source === null || originalPosition.line === null || originalPosition.column === null) {
+      if (!isOriginalPositionDiscoverable(targetLineNumber, targetColumnNumber)) {
         return match;
       }
+
+      const originalPosition = getOriginalPosition(targetLineNumber, targetColumnNumber);
 
       return '(' + originalPosition.source + ':' + originalPosition.line + ':' + originalPosition.column + ')';
     });
