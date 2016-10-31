@@ -4,6 +4,7 @@ dist
 *.log
 .*
 !.conventional-changelog-lintrc
+!.editorconfig
 !.gitignore
 !.npmignore
 !.babelrc
