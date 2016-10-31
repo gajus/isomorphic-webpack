@@ -125,7 +125,7 @@ export default (webpackConfiguration) => {
 
 ## Handling errors
 
-When a runtime error originates in a bundle, the stack trace refers to the code executed in the bundle (https://github.com/gajus/isomorphic-webpack/issues/4).
+When a runtime error originates in a bundle, the stack trace refers to the code executed in the bundle ([#4](https://github.com/gajus/isomorphic-webpack/issues/4)).
 
 Use [`formatErrorStack`](#api) to replace references to the VM code with the references resolved using the sourcemap, e.g.
 
@@ -155,6 +155,8 @@ ReferenceError: props is not defined
     at /node_modules/react-dom/lib/ReactServerRendering.js:45:36
     at ReactServerRenderingTransaction.perform (/node_modules/react-dom/lib/Transaction.js:140:20)
 ```
+
+Note: References to a generated code that cannot be resolved in a source map are ignored ([#5](https://github.com/gajus/isomorphic-webpack/issues/5)).
 
 ## FAQ
 
