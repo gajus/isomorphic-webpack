@@ -3,12 +3,12 @@ coverage
 dist
 *.log
 .*
+!.babelrc
 !.conventional-changelog-lintrc
 !.editorconfig
+!.eslintrc
 !.gitignore
 !.npmignore
-!.babelrc
-!.travis.yml
-!.eslintrc
 !.README
 !.scripts
+!.travis.yml
