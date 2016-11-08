@@ -19,7 +19,7 @@ export default (compiler: Compiler, callback: Function) => {
 
   const outputFileSystem = compiler.outputFileSystem;
 
-  return (error, stats) => {
+  return (error: Object, stats: Object) => {
     if (error) {
       debug('compiler error:', error);
 

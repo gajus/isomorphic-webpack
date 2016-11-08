@@ -4,6 +4,9 @@ import overrideRequire from 'override-require';
 import {
   SourceMapConsumer
 } from 'source-map';
+import type {
+  UserIsomorphicWebpackConfigType
+} from '../types';
 import createCompiler from './createCompiler';
 import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
@@ -12,7 +15,7 @@ import isRequestResolvable from './../utilities/isRequestResolvable';
 import resolveRequest from './../utilities/resolveRequest';
 import runCode from './../utilities/runCode';
 
-export default (webpackConfiguration, userIsomorphicWebpackConfiguration) => {
+export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration: UserIsomorphicWebpackConfigType) => {
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);
 
   const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
