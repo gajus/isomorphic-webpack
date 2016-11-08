@@ -6,11 +6,14 @@
 [![NPM version](http://img.shields.io/npm/v/isomorphic-webpack.svg?style=flat-square)](https://www.npmjs.org/package/isomorphic-webpack)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 
+<img src='.README/isomorphic-webpack.svg' width='176' height='200' alt='isomorphic-webpack' />
+
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
 * [isomorphic-webpack](#isomorphic-webpack)
     * [Goals](#isomorphic-webpack-goals)
     * [Try it](#isomorphic-webpack-try-it)
+    * [How does it work?](#isomorphic-webpack-how-does-it-work)
     * [Setup](#isomorphic-webpack-setup)
         * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
         * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
@@ -33,8 +36,8 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 https://github.com/gajus/isomorphic-webpack-boilerplate
 
-<a name="isomorphic-webpack-try-it-how-does-it-work"></a>
-#### How does it work?
+<a name="isomorphic-webpack-how-does-it-work"></a>
+## How does it work?
 
 Refer to the [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction) documentation.
 

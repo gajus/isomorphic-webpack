@@ -5,6 +5,8 @@
 [![NPM version](http://img.shields.io/npm/v/isomorphic-webpack.svg?style=flat-square)](https://www.npmjs.org/package/isomorphic-webpack)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 
+<img src='.README/isomorphic-webpack.svg' width='176' height='200' alt='isomorphic-webpack' />
+
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
 {"gitdown": "contents"}
@@ -20,7 +22,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 https://github.com/gajus/isomorphic-webpack-boilerplate
 
-#### How does it work?
+## How does it work?
 
 Refer to the [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction) documentation.
 
