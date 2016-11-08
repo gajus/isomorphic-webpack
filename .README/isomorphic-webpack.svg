@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 396.9 396.9" style="enable-background:new 0 0 396.9 396.9;" xml:space="preserve">
+	 viewBox="0 0 325.6 371.4" style="enable-background:new 0 0 325.6 371.4;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#1F78BE;}
 	.st1{fill:#94D5F4;}
@@ -9,18 +9,18 @@
 	.st3{fill:#1F7ABB;}
 </style>
 <g id="cube">
-	<polygon id="border" class="st0" points="198.3,12.7 361.1,102.1 361.1,291.3 198.3,384.1 35.6,291.3 35.6,102.1 	"/>
+	<polygon id="border" class="st0" points="162.8,0 325.6,89.4 325.6,278.6 162.8,371.4 0,278.6 0,89.4 	"/>
 </g>
 <g transform="translate(47.000000, 61.000000)">
-	<polygon id="border_1_" class="st1" points="314.1,131.6 233.9,276.1 71.1,277.4 -11.4,134.2 68.8,-1.7 231.6,-2.9 	"/>
+	<polygon id="border_1_" class="st1" points="278.6,118.9 198.3,263.4 35.5,264.7 -47,121.5 33.3,-14.4 196,-15.7 	"/>
 </g>
 <g id="cube_1_">
-	<polygon id="border_2_" class="st2" points="198.3,59.4 318,125.7 318,268.4 198.3,336.4 78.7,268.4 78.7,125.7 	"/>
+	<polygon id="border_2_" class="st2" points="162.8,46.6 282.5,113 282.5,255.7 162.8,323.7 43.1,255.7 43.1,113 	"/>
 </g>
 <g transform="translate(47.000000, 61.000000)">
 	<g>
-		<path id="inner-cube" class="st3" d="M147.1,203.1l-59.6-32.8v-65l59.6,34.4V203.1z M155.6,203.1l59.6-32.8v-65l-59.6,34.4V203.1z
-			 M151.4,137.3L151.4,137.3L151.4,137.3L151.4,137.3z M91.5,97.9L151.3,65l59.8,32.9l-59.8,34.6L91.5,97.9z"/>
+		<path id="inner-cube" class="st3" d="M111.5,190.4l-59.6-32.8v-65l59.6,34.4V190.4z M120.1,190.4l59.6-32.8v-65l-59.6,34.4V190.4z
+			 M115.8,124.6L115.8,124.6L115.8,124.6L115.8,124.6z M55.9,85.2l59.8-32.9l59.8,32.9l-59.8,34.6L55.9,85.2z"/>
 	</g>
 </g>
 </svg>
