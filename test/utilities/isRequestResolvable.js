@@ -1,5 +1,5 @@
 import test from 'ava';
-import isRequestResolvable from './../../src/utilities/isRequestResolvable';
+import isRequestResolvable from '../../src/utilities/isRequestResolvable';
 
 test('true if request includes inline loader', (assert) => {
   assert.true(isRequestResolvable('/', {}, 'css!./style.css', '/'));

@@ -1,5 +1,5 @@
 import test from 'ava';
-import resolveRequest from './../../src/utilities/resolveRequest';
+import resolveRequest from '../../src/utilities/resolveRequest';
 
 test('if request cannot be matched: throws error', (assert) => {
   assert.throws(() => {

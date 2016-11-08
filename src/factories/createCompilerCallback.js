@@ -6,8 +6,8 @@ import {
   DllPlugin
 } from 'webpack';
 import createDebug from 'debug';
+import findInstance from '../utilities/findInstance';
 import createResourceMap from './createResourceMap';
-import findInstance from './../utilities/findInstance';
 
 const debug = createDebug('isomorphic-webpack');
 

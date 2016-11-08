@@ -7,13 +7,13 @@ import {
 import type {
   UserIsomorphicWebpackConfigType
 } from '../types';
+import isRequestResolvable from '../utilities/isRequestResolvable';
+import resolveRequest from '../utilities/resolveRequest';
+import runCode from '../utilities/runCode';
 import createCompiler from './createCompiler';
 import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
 import createIsomorphicWebpackConfiguration from './createIsomorphicWebpackConfiguration';
-import isRequestResolvable from './../utilities/isRequestResolvable';
-import resolveRequest from './../utilities/resolveRequest';
-import runCode from './../utilities/runCode';
 
 export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration: UserIsomorphicWebpackConfigType) => {
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);

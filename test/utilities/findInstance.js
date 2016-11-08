@@ -1,5 +1,5 @@
 import test from 'ava';
-import findInstance from './../../src/utilities/findInstance';
+import findInstance from '../../src/utilities/findInstance';
 
 test('finds the first instance of an object in a list constructed with a supplied function', (assert) => {
   const MyConstructor = function () {};
