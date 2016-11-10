@@ -11,11 +11,11 @@ export default (context: string, requestMap: Object, request: string, parentFile
   const requestFilePath = loaders.pop();
 
   const resolvedLoaders = loaders
-    .map((loader) => {
+    .map((loader: string): string => {
       // @todo What is the purpose of the context parameter?
       return resolveLoaderSync({}, parentFilename, loader);
     })
-    .map((loaderAbsolutePath) => {
+    .map((loaderAbsolutePath: string): string => {
       return path.relative(context, loaderAbsolutePath);
     });
 

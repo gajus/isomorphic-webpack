@@ -11,7 +11,7 @@ import createResourceMap from './createResourceMap';
 
 const debug = createDebug('isomorphic-webpack');
 
-export default (compiler: Compiler, callback: Function) => {
+export default (compiler: Compiler, callback: Function): Function => {
   const dllPlugin = findInstance(compiler.options.plugins, DllPlugin);
   const manifestPath = dllPlugin.options.path;
 
