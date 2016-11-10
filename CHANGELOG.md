@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.6"></a>
+## [1.4.6](https://github.com/gajus/isomorphic-webpack/compare/v1.4.4...v1.4.6) (2016-11-10)
+
+
+
 <a name="1.4.5"></a>
 ## [1.4.5](https://github.com/gajus/isomorphic-webpack/compare/v1.4.4...v1.4.5) (2016-11-08)
 
