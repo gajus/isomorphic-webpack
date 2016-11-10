@@ -7,7 +7,7 @@
         "transform-object-rest-spread",
         "syntax-flow",
         "tcomb",
-        "transform-flow-strip-types",
+        "transform-flow-comments",
         "istanbul"
       ]
     },
@@ -17,7 +17,7 @@
         "add-module-exports",
         "transform-object-rest-spread",
         "syntax-flow",
-        "transform-flow-strip-types"
+        "transform-flow-comments"
       ]
     }
   },
