@@ -1,12 +1,13 @@
-node_modules
 coverage
 dist
+node_modules
 *.log
 .*
 !.babelrc
 !.conventional-changelog-lintrc
 !.editorconfig
 !.eslintrc
+!.flowconfig
 !.gitignore
 !.npmignore
 !.README
