@@ -46,6 +46,9 @@
     "tcomb": "^3.2.15",
     "webpack": "^2.1.0-beta.25"
   },
+  "engines": {
+    "node": ">=5"
+  },
   "keywords": [
     "isomorphic",
     "universal",
