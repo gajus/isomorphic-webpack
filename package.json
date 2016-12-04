@@ -81,7 +81,7 @@
     "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
     "generate-documentation": "gitdown ./.README/README.md --output-file ./README.md",
     "lint": "eslint ./src ./test && flow",
-    "precommit_": "npm run lint && npm run test",
+    "precommit": "npm run lint && npm run test",
     "test": "NODE_ENV=development ava --verbose && npm run lint && npm run build"
   },
   "version": "1.4.6"
