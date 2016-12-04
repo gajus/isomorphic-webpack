@@ -11,40 +11,40 @@
     ]
   },
   "dependencies": {
-    "debug": "^2.3.2",
+    "debug": "^2.3.3",
     "enhanced-resolve": "^2.3.0",
     "jsdom": "^9.8.3",
     "memory-fs": "^0.3.0",
     "override-require": "^1.1.1",
     "source-map": "^0.5.6",
-    "webpack-merge": "^0.15.0",
+    "webpack-merge": "^1.0.2",
     "webpack-node-externals": "^1.5.4"
   },
   "description": "Abstracts universal consumption of modules bundled using webpack.",
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.17.0",
     "babel-cli": "^6.18.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-istanbul": "^2.0.3",
+    "babel-plugin-istanbul": "^3.0.0",
     "babel-plugin-syntax-flow": "^6.18.0",
-    "babel-plugin-tcomb": "^0.3.22",
+    "babel-plugin-tcomb": "^0.3.24",
     "babel-plugin-transform-export-extensions": "^6.8.0",
     "babel-plugin-transform-flow-comments": "^6.17.0",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.19.0",
     "babel-preset-es2015-node4": "^2.1.0",
     "babel-register": "^6.18.0",
-    "coveralls": "^2.11.14",
-    "css-loader": "^0.25.0",
-    "eslint": "^3.9.1",
-    "eslint-config-canonical": "^5.3.3",
-    "flow-bin": "^0.34.0",
+    "coveralls": "^2.11.15",
+    "css-loader": "^0.26.1",
+    "eslint": "^3.11.1",
+    "eslint-config-canonical": "^5.8.0",
+    "flow-bin": "^0.36.0",
     "gitdown": "^2.5.0",
     "husky": "^0.11.9",
-    "nyc": "^8.4.0",
+    "nyc": "^10.0.0",
     "semantic-release": "^6.3.2",
     "sinon": "^2.0.0-pre.4",
     "tcomb": "^3.2.15",
-    "webpack": "^2.1.0-beta.25"
+    "webpack": "^2.1.0-beta.27"
   },
   "engines": {
     "node": ">=5"
@@ -81,7 +81,7 @@
     "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
     "generate-documentation": "gitdown ./.README/README.md --output-file ./README.md",
     "lint": "eslint ./src ./test && flow",
-    "precommit": "npm run lint && npm run test",
+    "precommit_": "npm run lint && npm run test",
     "test": "NODE_ENV=development ava --verbose && npm run lint && npm run build"
   },
   "version": "1.4.5"
