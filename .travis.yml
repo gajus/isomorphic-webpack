@@ -15,7 +15,6 @@ script:
   - nyc --silent npm run test
   - nyc report --reporter=text-lcov | coveralls
   - nyc check-coverage --lines 90
-  - conventional-changelog-lint --from=HEAD~$(git --no-pager rev-list master..HEAD --count)
 after_success:
   - NODE_ENV=production npm run build
   - semantic-release pre && npm publish && semantic-release post
