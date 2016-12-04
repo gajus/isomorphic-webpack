@@ -1,5 +1,8 @@
 // @flow
 
+import {
+  Compiler
+} from 'webpack';
 import overrideRequire from 'override-require';
 import {
   SourceMapConsumer
@@ -15,13 +18,21 @@ import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
 import createIsomorphicWebpackConfiguration from './createIsomorphicWebpackConfiguration';
 
-export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration: UserIsomorphicWebpackConfigType) => {
+type IsomorphicWebpackType = {|
+  /**
+   * @see https://webpack.github.io/docs/node.js-api.html#compiler
+   */
+  compiler: Compiler,
+  formatErrorStack: Function
+|};
+
 type ErrorPositionType = {|
   column: number,
   line: number,
   source: string
 |};
 
+export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigType): IsomorphicWebpackType => {
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);
 
   const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
@@ -108,6 +119,7 @@ type ErrorPositionType = {|
   };
 
   return {
+    compiler,
     formatErrorStack
   };
 };

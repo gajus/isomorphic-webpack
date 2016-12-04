@@ -43,7 +43,11 @@ createIsomorphicWebpack(webpackConfiguration);
 
 ```js
 type IsomorphicWebpackType = {|
-	formatErrorStack: Function
+  /**
+   * @see https://webpack.github.io/docs/node.js-api.html#compiler
+   */
+  compiler: Compiler,
+  formatErrorStack: Function
 |};
 
 createIsomorphicWebpack(webpackConfiguration: Object): IsomorphicWebpackType;
