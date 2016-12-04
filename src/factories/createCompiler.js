@@ -7,6 +7,7 @@ import MemoryFileSystem from 'memory-fs';
 
 /**
  * Creates a webpack compiler.
+ *
  * Configures the compiler to use memory file system.
  */
 export default (compilerConfiguration: Object): Compiler => {

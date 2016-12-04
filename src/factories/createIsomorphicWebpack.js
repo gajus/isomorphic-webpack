@@ -16,6 +16,12 @@ import createCompilerConfiguration from './createCompilerConfiguration';
 import createIsomorphicWebpackConfiguration from './createIsomorphicWebpackConfiguration';
 
 export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration: UserIsomorphicWebpackConfigType) => {
+type ErrorPositionType = {|
+  column: number,
+  line: number,
+  source: string
+|};
+
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);
 
   const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
@@ -63,12 +69,6 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   });
 
   compiler.watch({}, compilerCallback);
-
-  type ErrorPositionType = {|
-    column: number,
-    line: number,
-    source: string
-  |};
 
   const isOriginalPositionDiscoverable = (lineNumber: number, columnNumber: number): boolean => {
     const originalPosition = bundleSourceMapConsumer.originalPositionFor({
