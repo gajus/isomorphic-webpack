@@ -19,6 +19,7 @@ import createCompilerConfiguration from './createCompilerConfiguration';
 import createIsomorphicWebpackConfiguration from './createIsomorphicWebpackConfiguration';
 
 type IsomorphicWebpackType = {|
+
   /**
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
