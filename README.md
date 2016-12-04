@@ -60,11 +60,15 @@ createIsomorphicWebpack(webpackConfiguration);
 #### API
 
 ```js
-type IsomorphicWebpack = {|
-	formatErrorStack: Function
+type IsomorphicWebpackType = {|
+  /**
+   * @see https://webpack.github.io/docs/node.js-api.html#compiler
+   */
+  compiler: Compiler,
+  formatErrorStack: Function
 |};
 
-createIsomorphicWebpack(webpackConfiguration: Object, isomorphicWebpackConfiguration: Object): IsomorphicWebpack;
+createIsomorphicWebpack(webpackConfiguration: Object): IsomorphicWebpackType;
 ```
 
 <a name="isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration"></a>
@@ -72,7 +76,7 @@ createIsomorphicWebpack(webpackConfiguration: Object, isomorphicWebpackConfigura
 
 There are no configuration properties available for the high-level abstraction. (I have not identified a need.)
 
-If you have a requirement for configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:).
+If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
 
 <!--
 ```json
@@ -150,6 +154,7 @@ export default (webpackConfiguration) => {
 };
 ```
 
+
 <a name="isomorphic-webpack-handling-errors"></a>
 ## Handling errors
 
@@ -186,6 +191,7 @@ ReferenceError: props is not defined
 
 Note: References to a generated code that cannot be resolved in a source map are ignored ([#5](https://github.com/gajus/isomorphic-webpack/issues/5)).
 
+
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
 
@@ -214,3 +220,4 @@ To enable logging, export `DEBUG` environment variable:
 ```sh
 export DEBUG=isomorphic-webpack:*
 ```
+
