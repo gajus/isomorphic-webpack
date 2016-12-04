@@ -42,18 +42,18 @@ createIsomorphicWebpack(webpackConfiguration);
 #### API
 
 ```js
-type IsomorphicWebpack = {|
+type IsomorphicWebpackType = {|
 	formatErrorStack: Function
 |};
 
-createIsomorphicWebpack(webpackConfiguration: Object, isomorphicWebpackConfiguration: Object): IsomorphicWebpack;
+createIsomorphicWebpack(webpackConfiguration: Object): IsomorphicWebpackType;
 ```
 
 #### Isomorphic webpack configuration
 
 There are no configuration properties available for the high-level abstraction. (I have not identified a need.)
 
-If you have a requirement for configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:).
+If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
 
 <!--
 ```json
