@@ -21,6 +21,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
     * [FAQ](#isomorphic-webpack-faq)
         * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
         * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
+        * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
 
 
 <a name="isomorphic-webpack-goals"></a>
@@ -104,63 +105,63 @@ If you have a requirement for a configuration, [raise an issue](https://github.c
 
 ```js
 import {
-	createCompiler,
-	createCompilerCallback,
-	createCompilerConfiguration,
-	isRequestResolvable,
-	resolveRequest,
-	runCode
+  createCompiler,
+  createCompilerCallback,
+  createCompilerConfiguration,
+  isRequestResolvable,
+  resolveRequest,
+  runCode
 } from 'isomorphic-webpack';
 import overrideRequire from 'override-require';
 
 export default (webpackConfiguration) => {
-	// Use existing webpack configuration to create a new configuration
-	// that enables DllPlugin (Dynamically Linked Library) plugin.
-	const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
+  // Use existing webpack configuration to create a new configuration
+  // that enables DllPlugin (Dynamically Linked Library) plugin.
+  const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
 
-	// Create a webpack compiler that uses in-memory file system.
-	//
-	// The sole purpose of using in-memory file system is to avoid
-	// the overhead of disk write.
-	const compiler = createCompiler(compilerConfiguration);
+  // Create a webpack compiler that uses in-memory file system.
+  //
+  // The sole purpose of using in-memory file system is to avoid
+  // the overhead of disk write.
+  const compiler = createCompiler(compilerConfiguration);
 
-	let restoreOriginalRequire;
+  let restoreOriginalRequire;
 
-	// Create a callback for the consumption of the compiler.
-	//
-	// The callback function provided to the `createCompilerCallback`
-	// is invoked on each successful compilation.
-	//
-	// `createCompilerCallback` callback is invoked with an object
-	// that describes the resulting bundle code and a map of modules.
-	const compilerCallback = createCompilerCallback(compiler, ({bundleCode, requestMap}) => {
-		// Execute the code in the bundle.
-	  const webpackRequire = runCode(bundleCode);
+  // Create a callback for the consumption of the compiler.
+  //
+  // The callback function provided to the `createCompilerCallback`
+  // is invoked on each successful compilation.
+  //
+  // `createCompilerCallback` callback is invoked with an object
+  // that describes the resulting bundle code and a map of modules.
+  const compilerCallback = createCompilerCallback(compiler, ({bundleCode, requestMap}) => {
+  // Execute the code in the bundle.
+    const webpackRequire = runCode(bundleCode);
 
-	  // Setup a callback used to determine whether a specific `require` invocation
-	  // needs to be overridden.
-	  const isOverride = (request, parent) => {
-	    return isRequestResolvable(compiler.options.context, requestMap, request, parent.filename);
-	  };
+    // Setup a callback used to determine whether a specific `require` invocation
+    // needs to be overridden.
+    const isOverride = (request, parent) => {
+      return isRequestResolvable(compiler.options.context, requestMap, request, parent.filename);
+    };
 
-	  // Setup a callback used to override `require` invocation.
-	  const resolveOverride = (request, parent) => {
-	  	// Map request to the module ID.
-	    const matchedRequest = resolveRequest(compiler.options.context, requestMap, request, parent.filename);
-	    const moduleId = requestMap[matchedRequest];
+    // Setup a callback used to override `require` invocation.
+    const resolveOverride = (request, parent) => {
+    	// Map request to the module ID.
+      const matchedRequest = resolveRequest(compiler.options.context, requestMap, request, parent.filename);
+      const moduleId = requestMap[matchedRequest];
 
-	    return webpackRequire(moduleId);
-	  };
+      return webpackRequire(moduleId);
+    };
 
-	  if (restoreOriginalRequire) {
-	    restoreOriginalRequire();
-	  }
+    if (restoreOriginalRequire) {
+      restoreOriginalRequire();
+    }
 
-	  // Setup
-	  restoreOriginalRequire = overrideRequire(isOverride, resolveOverride);
-	});
+    // Setup
+    restoreOriginalRequire = overrideRequire(isOverride, resolveOverride);
+  });
 
-	compiler.watch({}, compilerCallback);
+  compiler.watch({}, compilerCallback);
 };
 ```
 
@@ -186,8 +187,8 @@ app.use((err, req, res, next) => {
 
 ```diff
 ReferenceError: props is not defined
--    at TopicIndexContainer (evalmachine.<anonymous>:485:15)
-+    at TopicIndexContainer (/src/client/containers/TopicIndexContainer/index.js:14:14)
+-   at TopicIndexContainer (evalmachine.<anonymous>:485:15)
++   at TopicIndexContainer (/src/client/containers/TopicIndexContainer/index.js:14:14)
     at WrappedComponent (/node_modules/react-css-modules/dist/wrapStatelessFunction.js:55:38)
     at /node_modules/react-dom/lib/ReactCompositeComponent.js:306:16
     at measureLifeCyclePerf (/node_modules/react-dom/lib/ReactCompositeComponent.js:75:12)
@@ -230,4 +231,32 @@ To enable logging, export `DEBUG` environment variable:
 ```sh
 export DEBUG=isomorphic-webpack:*
 ```
+
+<a name="isomorphic-webpack-faq-how-to-subscribe-to-compiler-events"></a>
+### How to subscribe to compiler events?
+
+Using `createIsomorphicWebpack` result has a `compiler` property. `compiler` is an instance of a webpack [`Compiler`](https://webpack.github.io/docs/node.js-api.html#compiler). Use it to subscribe to all compiler events, e.g.
+
+Attempting to render a route server-side before the compiler has completed at least one compilation will produce an error. Therefore, it is desirable to delay the first server-side render until the compiler has completed at least one compilation.
+
+```js
+const {
+  compiler
+} = createIsomorphicWebpack(webpackConfiguration);
+
+let routesAreInitialized;
+
+compiler.plugin('done', () => {
+  if (routesAreInitialized) {
+    return;
+  }
+
+  routesAreInitialized = true;
+
+  app.get('/', isomorphicMiddleware);
+});
+
+```
+
+This pattern is demonstrated in the [isomorphic-webpack-demo](https://github.com/gajus/isomorphic-webpack-demo/blob/master/src/bin/server.js#L29-L43).
 
