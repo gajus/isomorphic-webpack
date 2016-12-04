@@ -10,5 +10,4 @@ node_modules
 !.gitignore
 !.npmignore
 !.README
-!.scripts
 !.travis.yml

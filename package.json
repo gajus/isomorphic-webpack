@@ -41,10 +41,9 @@
     "gitdown": "^2.5.0",
     "husky": "^0.11.9",
     "nyc": "^8.4.0",
+    "semantic-release": "^6.3.2",
     "sinon": "^2.0.0-pre.4",
-    "standard-version": "^3.0.0",
     "tcomb": "^3.2.15",
-    "travis-after-all": "^1.4.4",
     "webpack": "^2.1.0-beta.25"
   },
   "keywords": [
