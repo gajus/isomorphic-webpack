@@ -33,9 +33,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015-node4": "^2.1.0",
     "babel-register": "^6.18.0",
-    "conventional-changelog-cli": "^1.2.0",
-    "conventional-changelog-lint": "^1.1.0",
-    "conventional-changelog-lint-config-canonical": "^1.0.0",
     "coveralls": "^2.11.14",
     "css-loader": "^0.25.0",
     "eslint": "^3.9.1",
@@ -80,7 +77,6 @@
   },
   "scripts": {
     "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
-    "commitmsg": "conventional-changelog-lint -e",
     "generate-documentation": "gitdown ./.README/README.md --output-file ./README.md",
     "lint": "eslint ./src ./test && flow",
     "precommit": "npm run lint && npm run test",
