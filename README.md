@@ -12,7 +12,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 * [isomorphic-webpack](#isomorphic-webpack)
     * [Goals](#isomorphic-webpack-goals)
-    * [Try it](#isomorphic-webpack-try-it)
+    * [How to get started?](#isomorphic-webpack-how-to-get-started)
     * [How does it work?](#isomorphic-webpack-how-does-it-work)
     * [Setup](#isomorphic-webpack-setup)
         * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
@@ -31,10 +31,20 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 * Server side hot reloading of modules. ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 
-<a name="isomorphic-webpack-try-it"></a>
-## Try it
+<a name="isomorphic-webpack-how-to-get-started"></a>
+## How to get started?
 
-https://github.com/gajus/isomorphic-webpack-boilerplate
+To start the server:
+
+```bash
+git clone git@github.com:gajus/isomorphic-webpack-demo.git
+cd ./isomorphic-webpack-demo
+npm install
+export DEBUG=express:application,isomorphic-webpack
+npm start
+```
+
+This will start the server on http://127.0.0.1:8000/.
 
 <a name="isomorphic-webpack-how-does-it-work"></a>
 ## How does it work?
