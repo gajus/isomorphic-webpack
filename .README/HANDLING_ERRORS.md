@@ -16,8 +16,8 @@ app.use((err, req, res, next) => {
 
 ```diff
 ReferenceError: props is not defined
--    at TopicIndexContainer (evalmachine.<anonymous>:485:15)
-+    at TopicIndexContainer (/src/client/containers/TopicIndexContainer/index.js:14:14)
+-   at TopicIndexContainer (evalmachine.<anonymous>:485:15)
++   at TopicIndexContainer (/src/client/containers/TopicIndexContainer/index.js:14:14)
     at WrappedComponent (/node_modules/react-css-modules/dist/wrapStatelessFunction.js:55:38)
     at /node_modules/react-dom/lib/ReactCompositeComponent.js:306:16
     at measureLifeCyclePerf (/node_modules/react-dom/lib/ReactCompositeComponent.js:75:12)
