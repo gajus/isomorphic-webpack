@@ -47,4 +47,4 @@ compiler.plugin('done', () => {
 
 ```
 
-This pattern is demonstrated in the [isomorphic-webpack-demo](https://github.com/gajus/isomorphic-webpack-demo/blob/7f0e428ec85ef3ca6d39fd1916028817783754b2/src/bin/server.js#L29-L35).
+This pattern is demonstrated in the [isomorphic-webpack-demo](https://github.com/gajus/isomorphic-webpack-demo/blob/master/src/bin/server.js#L29-L43).
