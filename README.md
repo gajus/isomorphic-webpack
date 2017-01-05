@@ -11,17 +11,17 @@
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
 * [isomorphic-webpack](#isomorphic-webpack)
-    * [Goals](#isomorphic-webpack-goals)
-    * [How to get started?](#isomorphic-webpack-how-to-get-started)
-    * [How does it work?](#isomorphic-webpack-how-does-it-work)
-    * [Setup](#isomorphic-webpack-setup)
-        * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
-        * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
-    * [Handling errors](#isomorphic-webpack-handling-errors)
-    * [FAQ](#isomorphic-webpack-faq)
-        * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
-        * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
-        * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
+  * [Goals](#isomorphic-webpack-goals)
+  * [How to get started?](#isomorphic-webpack-how-to-get-started)
+  * [How does it work?](#isomorphic-webpack-how-does-it-work)
+  * [Setup](#isomorphic-webpack-setup)
+    * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
+    * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
+  * [Handling errors](#isomorphic-webpack-handling-errors)
+  * [FAQ](#isomorphic-webpack-faq)
+    * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
+    * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
+    * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
 
 
 <a name="isomorphic-webpack-goals"></a>
