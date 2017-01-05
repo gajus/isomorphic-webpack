@@ -11,17 +11,18 @@
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
 * [isomorphic-webpack](#isomorphic-webpack)
-  * [Goals](#isomorphic-webpack-goals)
-  * [How to get started?](#isomorphic-webpack-how-to-get-started)
-  * [How does it work?](#isomorphic-webpack-how-does-it-work)
-  * [Setup](#isomorphic-webpack-setup)
-    * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
-    * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
-  * [Handling errors](#isomorphic-webpack-handling-errors)
-  * [FAQ](#isomorphic-webpack-faq)
-    * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
-    * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
-    * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
+    * [Goals](#isomorphic-webpack-goals)
+    * [How to get started?](#isomorphic-webpack-how-to-get-started)
+    * [How does it work?](#isomorphic-webpack-how-does-it-work)
+    * [Setup](#isomorphic-webpack-setup)
+        * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
+        * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
+    * [Handling errors](#isomorphic-webpack-handling-errors)
+    * [FAQ](#isomorphic-webpack-faq)
+        * [How does the hot-reloading work?](#isomorphic-webpack-faq-how-does-the-hot-reloading-work)
+        * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
+        * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
+        * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
 
 
 <a name="isomorphic-webpack-goals"></a>
@@ -205,6 +206,42 @@ Note: References to a generated code that cannot be resolved in a source map are
 
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
+
+<a name="isomorphic-webpack-faq-how-does-the-hot-reloading-work"></a>
+### How does the hot-reloading work?
+
+I have been asked a question:
+
+> I have setup https://github.com/gajus/isomorphic-webpack-demo and
+> navigated to http://127.0.0.1:8000/. It printed 'Hello, World!'.
+>
+> Then I have changed `./src/app/index.js` to say `Hello, HRM!`.
+> I was expecting the message 'Hello, World!' to change to 'Hello, HMR!'
+> in the already open browser window. However, it didn't.
+>
+> The message changed to 'Hello, HRM!' only after I have refreshed the browser window.
+>
+> How is this hot-reloading?
+
+I have used the term "hot-reloading" to describe a process where the webpack
+bundle is rebuilt every time a file in the project changes. The change will be
+visible on the next HTTP request.
+
+It is "hot-reloading" in a sense that you do not need to restart the HTTP
+server every time you make a change to the application.
+
+There is no logic that would force-refresh the page on completion of the compilation.
+There are several ways to achieve this, e.g. using a custom script that queries the backend.
+However, this does logic does not belong in `isomorphic-webpack`.
+
+The purpose of the server-side rendering is to generate HTML response to a HTTP request.
+`isomorphic-webpack` does perform hot-reloading that satisfies this use case.
+
+The primary purpose of hot module reloading (HRM) is to enable better
+developer experience. Given that it is a development feature, it is safe to assume
+that the developer is in control over the development environment.
+Therefore, to achieve HMR you need to implement the logic in your frontend application
+and configure webpack as described in the [Hot module replacement with webpack](https://github.com/webpack/docs/wiki/hot-module-replacement-with-webpack) guide.
 
 <a name="isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment"></a>
 ### How to differentiate between Node.js and browser environment?
