@@ -10,19 +10,22 @@
 
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
-* [isomorphic-webpack](#isomorphic-webpack)
-    * [Goals](#isomorphic-webpack-goals)
-    * [How to get started?](#isomorphic-webpack-how-to-get-started)
-    * [How does it work?](#isomorphic-webpack-how-does-it-work)
-    * [Setup](#isomorphic-webpack-setup)
-        * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
-        * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
-    * [Handling errors](#isomorphic-webpack-handling-errors)
-    * [FAQ](#isomorphic-webpack-faq)
-        * [How does the hot-reloading work?](#isomorphic-webpack-faq-how-does-the-hot-reloading-work)
-        * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
-        * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
-        * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
+* [Goals](#isomorphic-webpack-goals)
+* [How to get started?](#isomorphic-webpack-how-to-get-started)
+* [How does it work?](#isomorphic-webpack-how-does-it-work)
+* [Setup](#isomorphic-webpack-setup)
+    * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
+        * [API](#isomorphic-webpack-setup-high-level-abstraction-api)
+        * [Isomorphic webpack configuration](#isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration)
+    * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
+* [Handling errors](#isomorphic-webpack-handling-errors)
+* [FAQ](#isomorphic-webpack-faq)
+    * [How does the hot-reloading work?](#isomorphic-webpack-faq-how-does-the-hot-reloading-work)
+    * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
+    * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
+    * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
+    * [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
+    * [How to delay request handling while compilation is in progress?](#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress)
 
 
 <a name="isomorphic-webpack-goals"></a>
@@ -30,11 +33,13 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 * Only one running node process. ✅
 * Enables use of all webpack loaders. ✅
-* Server side hot reloading of modules. ✅
+* Server-side hot reloading of modules. ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 
 <a name="isomorphic-webpack-how-to-get-started"></a>
 ## How to get started?
+
+The easiest way to start is to analyse the demo application.
 
 To start the server:
 
@@ -47,6 +52,10 @@ npm start
 ```
 
 This will start the server on http://127.0.0.1:8000/.
+
+```bash
+open http://127.0.0.1:8000/
+```
 
 <a name="isomorphic-webpack-how-does-it-work"></a>
 ## How does it work?
@@ -66,40 +75,55 @@ import {
 import webpackConfiguration from './webpack.configuration';
 
 createIsomorphicWebpack(webpackConfiguration);
+
 ```
 
 <a name="isomorphic-webpack-setup-high-level-abstraction-api"></a>
 #### API
 
 ```js
+/**
+ * @see https://webpack.js.org/configuration/
+ */
+type WebpackConfigurationType = Object;
+
+/**
+ * @see https://github.com/gajus/gitdown#isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration
+ */
+type UserIsomorphicWebpackConfigurationType = {
+  useCompilationPromise?: boolean
+};
+
 type IsomorphicWebpackType = {|
   /**
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
-  compiler: Compiler,
-  formatErrorStack: Function
+  +compiler: Compiler,
+  +formatErrorStack: Function
 |};
 
-createIsomorphicWebpack(webpackConfiguration: Object): IsomorphicWebpackType;
+createIsomorphicWebpack(webpackConfiguration: WebpackConfigurationType, isomorphicWebpackConfiguration: UserIsomorphicWebpackConfigurationType): IsomorphicWebpackType;
+
 ```
 
 <a name="isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration"></a>
 #### Isomorphic webpack configuration
 
-There are no configuration properties available for the high-level abstraction. (I have not identified a need.)
-
-If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
-
-<!--
 ```json
 {
   "additionalProperties": false,
-  "properties": {},
+  "properties": {
+    "useCompilationPromise": {
+      "description": "Toggles compilation observer. Enable this feature to use `createCompilationPromise`.",
+      "type": "boolean"
+    }
+  },
   "type": "object"
 }
 
 ```
--->
+
+If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
 
 <a name="isomorphic-webpack-setup-low-level-abstraction"></a>
 ### Low-level abstraction
@@ -272,9 +296,39 @@ export DEBUG=isomorphic-webpack:*
 <a name="isomorphic-webpack-faq-how-to-subscribe-to-compiler-events"></a>
 ### How to subscribe to compiler events?
 
-Using `createIsomorphicWebpack` result has a `compiler` property. `compiler` is an instance of a webpack [`Compiler`](https://webpack.github.io/docs/node.js-api.html#compiler). Use it to subscribe to all compiler events, e.g.
+Using `createIsomorphicWebpack` result has a `compiler` property. `compiler` is an instance of a webpack [`Compiler`](https://webpack.github.io/docs/node.js-api.html#compiler). Use it to subscribe to all compiler events.
 
-Attempting to render a route server-side before the compiler has completed at least one compilation will produce an error. Therefore, it is desirable to delay the first server-side render until the compiler has completed at least one compilation.
+<a name="isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation"></a>
+### How to delay route initialisation until the first successful compilation?
+
+See also:
+
+* [How to delay request handling while compilation is in progress?](#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress)
+
+Attempting to render a route server-side before the compiler has completed at least one compilation will produce an error, e.g.
+
+```diff
++SyntaxError: /src/app/style.css: Unexpected token (1:0)
++> 1 | .greetings {
++    | ^
++  2 |   font-weight: bold;
++  3 | }
++  4 |
+    at Parser.pp$5.raise (/node_modules/babylon/lib/index.js:4246:13)
+    at Parser.pp.unexpected (/node_modules/babylon/lib/index.js:1627:8)
+    at Parser.pp$3.parseExprAtom (/node_modules/babylon/lib/index.js:3586:12)
+    at Parser.parseExprAtom (/node_modules/babylon/lib/index.js:6402:22)
+    at Parser.pp$3.parseExprSubscripts (/node_modules/babylon/lib/index.js:3331:19)
+    at Parser.pp$3.parseMaybeUnary (/node_modules/babylon/lib/index.js:3311:19)
+    at Parser.pp$3.parseExprOps (/node_modules/babylon/lib/index.js:3241:19)
+    at Parser.pp$3.parseMaybeConditional (/node_modules/babylon/lib/index.js:3218:19)
+    at Parser.pp$3.parseMaybeAssign (/node_modules/babylon/lib/index.js:3181:19)
+    at Parser.parseMaybeAssign (/node_modules/babylon/lib/index.js:5694:20)
+```
+
+The error will vary depending on what loaders your application code depends on.
+
+Therefore, it is desirable to delay the first server-side render until the compiler has completed at least one compilation.
 
 ```js
 const {
@@ -296,4 +350,50 @@ compiler.plugin('done', () => {
 ```
 
 This pattern is demonstrated in the [isomorphic-webpack-demo](https://github.com/gajus/isomorphic-webpack-demo/blob/master/src/bin/server.js#L29-L43).
+
+<a name="isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress"></a>
+### How to delay request handling while compilation is in progress?
+
+See also:
+
+* [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
+
+> WARNING! Do not use this in production. This implementation has a large overhead.
+
+It might be desirable to stall HTTP request handling until whatever in-progress compilation has completed.
+This ensures that during the development you do not receive a stale response.
+
+To achieve this:
+
+* Enable compilation observer using `useCompilationPromise` configuration.
+* Use `createCompilationPromise` to create a promise that resolves when a current compilation completes.
+* Use the resulting promise to create a middleware that queues all HTTP requests until the promise is resolved.
+
+> Note:
+>
+> You must enable this feature using `useCompilationPromise` configuration.
+>
+> If you use `createCompilationPromise` without configuring `useCompilationPromise`,
+> you will get an error:
+>
+> "createCompilationPromise" feature has not been enabled.
+
+Example usage:
+
+```js
+const {
+  createCompilationPromise
+} = createIsomorphicWebpack(webpackConfiguration, {
+  useCompilationPromise: true
+});
+
+app.use(async (req, res, next) => {
+  await createCompilationPromise();
+
+  next();
+});
+
+app.get('/', isomorphicMiddleware);
+
+```
 
