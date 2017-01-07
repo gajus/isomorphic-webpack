@@ -213,3 +213,11 @@ From a subjective perspective, `isomorphic-webpack` is a lot easier to setup tha
 >
 > Contact me to correct an error in the above comparison table, if you'd like to
 > add another comparison criteria, or to add another framework.
+
+### I thought we agreed to use the term "universal"?
+
+> TL;DR: **Isomorphism** is the functional aspect of seamlessly switching between client- and server-side rendering without losing state. **Universal** is a term used to emphasize the fact that a particular piece of JavaScript code is able to run in multiple environments.
+
+– https://medium.com/@ghengeveld/isomorphism-vs-universal-javascript-4b47fb481beb#.h7fikpuyk
+
+`isomorphic-webpack` is a program that runs server-side and enables rendering of the same code base client- and server-side.
