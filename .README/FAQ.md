@@ -193,3 +193,23 @@ app.use(async (req, res, next) => {
 app.get('/', isomorphicMiddleware);
 
 ```
+
+### What makes `isomorphic-webpack` different from `webpack-isomorphic-tools`, `universal-webpack`, ...?
+
+|Feature|`isomorphic-webpack`|[`webpack-isomorphic-tools`](https://github.com/halt-hammerzeit/webpack-isomorphic-tools)|[`universal-webpack`](https://github.com/halt-hammerzeit/universal-webpack)|
+|---|---|---|---|
+|Only one running node process.|✅|❌|❌|
+|Does not require a separate webpack configuration.|✅|❌|❌|
+|Enables use of all webpack loaders.|✅|❌|❌|
+|Server-side hot reloading of modules.|✅|✅|✅|
+|Supports stack trace.|✅|❌|❌|
+|Prevents serving stale data.|✅|❌|❌|
+|Overrides Node.js `require()`.|✅|✅|❌|
+|Uses webpack `target: "node"`.|❌|❌|✅|
+
+From a subjective perspective, `isomorphic-webpack` is a lot easier to setup than any of the existing alternatives.
+
+> I apologise in advance if I have misrepresented either of the frameworks.
+>
+> Contact me to correct an error in the above comparison table, if you'd like to
+> add another comparison criteria, or to add another framework.

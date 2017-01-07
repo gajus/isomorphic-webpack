@@ -15,7 +15,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 * Only one running node process. ✅
 * Does not require a separate webpack configuration. ✅
-* [Enables use of all webpack loaders.](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader) ✅
+* [Enables use of all webpack loaders](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader). ✅
 * [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 * [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
@@ -43,6 +43,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
     * [How to subscribe to compiler events?](#isomorphic-webpack-faq-how-to-subscribe-to-compiler-events)
     * [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
     * [How to delay request handling while compilation is in progress?](#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress)
+    * [What makes `isomorphic-webpack` different from `webpack-isomorphic-tools`, `universal-webpack`, ...?](#isomorphic-webpack-faq-what-makes-isomorphic-webpack-different-from-webpack-isomorphic-tools-universal-webpack)
 
 
 <a name="isomorphic-webpack-setup"></a>
@@ -418,4 +419,25 @@ app.use(async (req, res, next) => {
 app.get('/', isomorphicMiddleware);
 
 ```
+
+<a name="isomorphic-webpack-faq-what-makes-isomorphic-webpack-different-from-webpack-isomorphic-tools-universal-webpack"></a>
+### What makes <code>isomorphic-webpack</code> different from <code>webpack-isomorphic-tools</code>, <code>universal-webpack</code>, ...?
+
+|Feature|`isomorphic-webpack`|[`webpack-isomorphic-tools`](https://github.com/halt-hammerzeit/webpack-isomorphic-tools)|[`universal-webpack`](https://github.com/halt-hammerzeit/universal-webpack)|
+|---|---|---|---|
+|Only one running node process.|✅|❌|❌|
+|Does not require a separate webpack configuration.|✅|❌|❌|
+|Enables use of all webpack loaders.|✅|❌|❌|
+|Server-side hot reloading of modules.|✅|✅|✅|
+|Supports stack trace.|✅|❌|❌|
+|Prevents serving stale data.|✅|❌|❌|
+|Overrides Node.js `require()`.|✅|✅|❌|
+|Uses webpack `target: "node"`.|❌|❌|✅|
+
+From a subjective perspective, `isomorphic-webpack` is a lot easier to setup than any of the existing alternatives.
+
+> I apologise in advance if I have misrepresented either of the frameworks.
+>
+> Contact me to correct an error in the above comparison table, if you'd like to
+> add another comparison criteria, or to add another framework.
 
