@@ -63,6 +63,10 @@ Using `createIsomorphicWebpack` result has a `compiler` property. `compiler` is 
 
 ### How to delay route initialisation until the first successful compilation?
 
+See also:
+
+* [How to delay request handling while compilation is in progress?](#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress)
+
 Attempting to render a route server-side before the compiler has completed at least one compilation will produce an error, e.g.
 
 ```diff
@@ -108,3 +112,48 @@ compiler.plugin('done', () => {
 ```
 
 This pattern is demonstrated in the [isomorphic-webpack-demo](https://github.com/gajus/isomorphic-webpack-demo/blob/master/src/bin/server.js#L29-L43).
+
+### How to delay request handling while compilation is in progress?
+
+See also:
+
+* [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
+
+> WARNING! Do not use this in production. This implementation has a large overhead.
+
+It might be desirable to stall HTTP request handling until whatever in-progress compilation has completed.
+This ensures that during the development you do not receive a stale response.
+
+To achieve this:
+
+* Enable compilation observer using `useCompilationPromise` configuration.
+* Use `createCompilationPromise` to create a promise that resolves when a current compilation completes.
+* Use the resulting promise to create a middleware that queues all HTTP requests until the promise is resolved.
+
+> Note:
+>
+> You must enable this feature using `useCompilationPromise` configuration.
+>
+> If you use `createCompilationPromise` without configuring `useCompilationPromise`,
+> you will get an error:
+>
+> "createCompilationPromise" feature has not been enabled.
+
+Example usage:
+
+```js
+const {
+  createCompilationPromise
+} = createIsomorphicWebpack(webpackConfiguration, {
+  useCompilationPromise: true
+});
+
+app.use(async (req, res, next) => {
+  await createCompilationPromise();
+
+  next();
+});
+
+app.get('/', isomorphicMiddleware);
+
+```

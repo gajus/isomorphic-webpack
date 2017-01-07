@@ -7,6 +7,7 @@ import overrideRequire from 'override-require';
 import {
   SourceMapConsumer
 } from 'source-map';
+import createDebug from 'debug';
 import type {
   UserIsomorphicWebpackConfigType
 } from '../types';
@@ -18,12 +19,15 @@ import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
 import createIsomorphicWebpackConfiguration from './createIsomorphicWebpackConfiguration';
 
+const debug = createDebug('isomorphic-webpack');
+
 type IsomorphicWebpackType = {|
 
   /**
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
   compiler: Compiler,
+  createCompilationPromise: Function,
   formatErrorStack: Function
 |};
 
@@ -35,10 +39,49 @@ type ErrorPositionType = {|
 
 export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigType): IsomorphicWebpackType => {
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);
-
   const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
-
   const compiler = createCompiler(compilerConfiguration);
+
+  let createCompilationPromise;
+
+  /**
+   * @see https://github.com/gajus/isomorphic-webpack#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress
+   */
+  if (isomorphicWebpackConfiguration.useCompilationPromise) {
+    let compilationPromise;
+    let compilationPromiseResolve;
+    let compilationPromiseIsResolved = true;
+
+    createCompilationPromise = () => {
+      return compilationPromise;
+    };
+
+    compiler.plugin('compile', () => {
+      debug('compiler event: compile (compilationPromiseIsResolved: %s)', compilationPromiseIsResolved);
+
+      if (!compilationPromiseIsResolved) {
+        return;
+      }
+
+      compilationPromiseIsResolved = false;
+
+      compilationPromise = new Promise((resolve) => {
+        compilationPromiseResolve = resolve;
+      });
+    });
+
+    compiler.plugin('done', () => {
+      debug('compiler event: done');
+
+      compilationPromiseIsResolved = true;
+
+      compilationPromiseResolve();
+    });
+  } else {
+    createCompilationPromise = () => {
+      throw new Error('"createCompilationPromise" feature has not been enabled.');
+    };
+  }
 
   let restoreOriginalRequire;
   let bundleSourceMapConsumer;
@@ -121,6 +164,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
 
   return {
     compiler,
+    createCompilationPromise,
     formatErrorStack
   };
 };

@@ -47,33 +47,43 @@ import {
 import webpackConfiguration from './webpack.configuration';
 
 createIsomorphicWebpack(webpackConfiguration);
+
 ```
 
 #### API
 
 ```js
+/**
+ * @see https://webpack.js.org/configuration/
+ */
+type WebpackConfigurationType = Object;
+
+/**
+ * @see https://github.com/gajus/gitdown#isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration
+ */
+type UserIsomorphicWebpackConfigurationType = {
+  useCompilationPromise?: boolean
+};
+
 type IsomorphicWebpackType = {|
   /**
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
-  compiler: Compiler,
-  formatErrorStack: Function
+  +compiler: Compiler,
+  +formatErrorStack: Function
 |};
 
-createIsomorphicWebpack(webpackConfiguration: Object): IsomorphicWebpackType;
+createIsomorphicWebpack(webpackConfiguration: WebpackConfigurationType, isomorphicWebpackConfiguration: UserIsomorphicWebpackConfigurationType): IsomorphicWebpackType;
+
 ```
 
 #### Isomorphic webpack configuration
 
-There are no configuration properties available for the high-level abstraction. (I have not identified a need.)
+```json
+{"gitdown": "include", "file": "./../src/schemas/isomorphicWebpackConfigurationSchema.json"}
+```
 
 If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
-
-<!--
-```json
-{"gitdown": "include", "file": "./../src/schemas/isomorphicWebpackConfiguration.json"}
-```
--->
 
 ### Low-level abstraction
 
