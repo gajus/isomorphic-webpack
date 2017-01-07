@@ -20,6 +20,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
     * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
 * [Handling errors](#isomorphic-webpack-handling-errors)
 * [FAQ](#isomorphic-webpack-faq)
+    * [How to use webpack `*-loader` loader?](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader)
     * [How does the hot-reloading work?](#isomorphic-webpack-faq-how-does-the-hot-reloading-work)
     * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
     * [How to enable logging?](#isomorphic-webpack-faq-how-to-enable-logging)
@@ -32,9 +33,10 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 ## Goals
 
 * Only one running node process. ✅
-* Enables use of all webpack loaders. ✅
-* Server-side hot reloading of modules. ✅
+* [Enables use of all webpack loaders.](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader) ✅
+* [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
+* [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
 
 <a name="isomorphic-webpack-how-to-get-started"></a>
 ## How to get started?
@@ -231,6 +233,17 @@ Note: References to a generated code that cannot be resolved in a source map are
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
 
+<a name="isomorphic-webpack-faq-how-to-use-webpack-loader-loader"></a>
+### How to use webpack <code>*-loader</code> loader?
+
+> Loaders allow you to preprocess files as you require() or "load" them. [..] Loaders can transform files from a different language like, CoffeeScript to JavaScript, or inline images as data URLs.
+
+– https://webpack.github.io/docs/loaders.html
+
+`isomorphic-webpack` is simulating the browser environment to evaluate loaders that are designed to run in a browser, e.g. [`style-loader`](https://github.com/webpack/style-loader). Therefore, all webpack loaders work out of the box with `isomorphic-webpack`.
+
+If you have found a loader that does not work, [report an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=[bug]%20loader%20X%20does%20work&body=The%20following%20X%20loader%20configuration%20Y%20is%20producing%20the%20following%20error%20Z.).
+
 <a name="isomorphic-webpack-faq-how-does-the-hot-reloading-work"></a>
 ### How does the hot-reloading work?
 
@@ -358,7 +371,9 @@ See also:
 
 * [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
 
-> WARNING! Do not use this in production. This implementation has a large overhead.
+> WARNING!
+>
+> Do not use this in production. This implementation has a large overhead.
 
 It might be desirable to stall HTTP request handling until whatever in-progress compilation has completed.
 This ensures that during the development you do not receive a stale response.

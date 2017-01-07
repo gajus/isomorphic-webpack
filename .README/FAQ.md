@@ -1,3 +1,13 @@
+### How to use webpack `*-loader` loader?
+
+> Loaders allow you to preprocess files as you require() or "load" them. [..] Loaders can transform files from a different language like, CoffeeScript to JavaScript, or inline images as data URLs.
+
+– https://webpack.github.io/docs/loaders.html
+
+`isomorphic-webpack` is simulating the browser environment to evaluate loaders that are designed to run in a browser, e.g. [`style-loader`](https://github.com/webpack/style-loader). Therefore, all webpack loaders work out of the box with `isomorphic-webpack`.
+
+If you have found a loader that does not work, [report an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=[bug]%20loader%20X%20does%20work&body=The%20following%20X%20loader%20configuration%20Y%20is%20producing%20the%20following%20error%20Z.).
+
 ### How does the hot-reloading work?
 
 I have been asked a question:
@@ -119,7 +129,9 @@ See also:
 
 * [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
 
-> WARNING! Do not use this in production. This implementation has a large overhead.
+> WARNING!
+>
+> Do not use this in production. This implementation has a large overhead.
 
 It might be desirable to stall HTTP request handling until whatever in-progress compilation has completed.
 This ensures that during the development you do not receive a stale response.
