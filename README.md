@@ -10,6 +10,16 @@
 
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
+<a name="isomorphic-webpack-goals"></a>
+## Goals
+
+* Only one running node process. ✅
+* Does not require a separate webpack configuration. ✅
+* [Enables use of all webpack loaders.](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader) ✅
+* [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
+* [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
+* [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
+
 * [Goals](#isomorphic-webpack-goals)
 * [Setup](#isomorphic-webpack-setup)
     * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
@@ -28,16 +38,6 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
     * [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
     * [How to delay request handling while compilation is in progress?](#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress)
 
-
-<a name="isomorphic-webpack-goals"></a>
-## Goals
-
-* Only one running node process. ✅
-* Does not require a separate webpack configuration. ✅
-* [Enables use of all webpack loaders.](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader) ✅
-* [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
-* [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
-* [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
 
 <a name="isomorphic-webpack-setup"></a>
 ## Setup

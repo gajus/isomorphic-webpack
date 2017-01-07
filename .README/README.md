@@ -9,8 +9,6 @@
 
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
-{"gitdown": "contents", "rootId": "isomorphic-webpack", "maxLevel": 5}
-
 ## Goals
 
 * Only one running node process. ✅
@@ -19,6 +17,8 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 * [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 * [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
+
+{"gitdown": "contents", "rootId": "isomorphic-webpack", "maxLevel": 5}
 
 ## Setup
 
