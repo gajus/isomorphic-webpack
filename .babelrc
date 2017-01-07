@@ -6,7 +6,7 @@
         "add-module-exports",
         "transform-object-rest-spread",
         "syntax-flow",
-        "tcomb",
+        "flow-runtime",
         "transform-flow-comments",
         "istanbul"
       ]
