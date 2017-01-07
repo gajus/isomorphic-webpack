@@ -5,5 +5,5 @@ type IsOverrideType = (request: Object, parent?: Object) => boolean;
 
 export type UserIsomorphicWebpackConfigType = {
   formatErrorStack?: boolean,
-  isOverride?: IsOverrideType
+  isRequireOverride?: IsRequireOverrideType
 };

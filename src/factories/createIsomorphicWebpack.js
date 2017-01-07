@@ -58,7 +58,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
       if (override) {
         const matchedRequest = resolveRequest(compiler.options.context, requestMap, request, parent.filename);
 
-        if (isomorphicWebpackConfiguration.isOverride && !isomorphicWebpackConfiguration.isOverride(matchedRequest)) {
+        if (isomorphicWebpackConfiguration.isRequireOverride && !isomorphicWebpackConfiguration.isRequireOverride(matchedRequest)) {
           return false;
         }
       }
