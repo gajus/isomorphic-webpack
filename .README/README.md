@@ -15,10 +15,12 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 
 * Only one running node process. ✅
 * Enables use of all webpack loaders. ✅
-* Server side hot reloading of modules. ✅
+* Server-side hot reloading of modules. ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 
 ## How to get started?
+
+The easiest way to start is to analyse the demo application.
 
 To start the server:
 
@@ -31,6 +33,10 @@ npm start
 ```
 
 This will start the server on http://127.0.0.1:8000/.
+
+```bash
+open http://127.0.0.1:8000/
+```
 
 ## How does it work?
 
