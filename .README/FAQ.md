@@ -1,3 +1,27 @@
+### How to get started?
+
+The easiest way to start is to analyse the demo application.
+
+To start the server:
+
+```bash
+git clone git@github.com:gajus/isomorphic-webpack-demo.git
+cd ./isomorphic-webpack-demo
+npm install
+export DEBUG=express:application,isomorphic-webpack
+npm start
+```
+
+This will start the server on http://127.0.0.1:8000/.
+
+```bash
+open http://127.0.0.1:8000/
+```
+
+### How does `isomorphic-webpack` work?
+
+Refer to the [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction) documentation.
+
 ### How to use webpack `*-loader` loader?
 
 > Loaders allow you to preprocess files as you require() or "load" them. [..] Loaders can transform files from a different language like, CoffeeScript to JavaScript, or inline images as data URLs.

@@ -11,8 +11,6 @@
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
 * [Goals](#isomorphic-webpack-goals)
-* [How to get started?](#isomorphic-webpack-how-to-get-started)
-* [How does it work?](#isomorphic-webpack-how-does-it-work)
 * [Setup](#isomorphic-webpack-setup)
     * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
         * [API](#isomorphic-webpack-setup-high-level-abstraction-api)
@@ -20,6 +18,8 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
     * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
 * [Handling errors](#isomorphic-webpack-handling-errors)
 * [FAQ](#isomorphic-webpack-faq)
+    * [How to get started?](#isomorphic-webpack-faq-how-to-get-started)
+    * [How does `isomorphic-webpack` work?](#isomorphic-webpack-faq-how-does-isomorphic-webpack-work)
     * [How to use webpack `*-loader` loader?](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader)
     * [How does the hot-reloading work?](#isomorphic-webpack-faq-how-does-the-hot-reloading-work)
     * [How to differentiate between Node.js and browser environment?](#isomorphic-webpack-faq-how-to-differentiate-between-node-js-and-browser-environment)
@@ -33,36 +33,11 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 ## Goals
 
 * Only one running node process. ✅
+* Does not require a separate webpack configuration. ✅
 * [Enables use of all webpack loaders.](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader) ✅
 * [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 * [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
-
-<a name="isomorphic-webpack-how-to-get-started"></a>
-## How to get started?
-
-The easiest way to start is to analyse the demo application.
-
-To start the server:
-
-```bash
-git clone git@github.com:gajus/isomorphic-webpack-demo.git
-cd ./isomorphic-webpack-demo
-npm install
-export DEBUG=express:application,isomorphic-webpack
-npm start
-```
-
-This will start the server on http://127.0.0.1:8000/.
-
-```bash
-open http://127.0.0.1:8000/
-```
-
-<a name="isomorphic-webpack-how-does-it-work"></a>
-## How does it work?
-
-Refer to the [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction) documentation.
 
 <a name="isomorphic-webpack-setup"></a>
 ## Setup
@@ -232,6 +207,32 @@ Note: References to a generated code that cannot be resolved in a source map are
 
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
+
+<a name="isomorphic-webpack-faq-how-to-get-started"></a>
+### How to get started?
+
+The easiest way to start is to analyse the demo application.
+
+To start the server:
+
+```bash
+git clone git@github.com:gajus/isomorphic-webpack-demo.git
+cd ./isomorphic-webpack-demo
+npm install
+export DEBUG=express:application,isomorphic-webpack
+npm start
+```
+
+This will start the server on http://127.0.0.1:8000/.
+
+```bash
+open http://127.0.0.1:8000/
+```
+
+<a name="isomorphic-webpack-faq-how-does-isomorphic-webpack-work"></a>
+### How does <code>isomorphic-webpack</code> work?
+
+Refer to the [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction) documentation.
 
 <a name="isomorphic-webpack-faq-how-to-use-webpack-loader-loader"></a>
 ### How to use webpack <code>*-loader</code> loader?

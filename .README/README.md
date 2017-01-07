@@ -14,34 +14,11 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
 ## Goals
 
 * Only one running node process. ✅
+* Does not require a separate webpack configuration. ✅
 * [Enables use of all webpack loaders.](#isomorphic-webpack-faq-how-to-use-webpack-loader-loader) ✅
 * [Server-side hot reloading of modules](#how-does-the-hot-reloading-work). ✅
 * [Stack trace support](https://github.com/gajus/isomorphic-webpack/issues/4). ✅
 * [Prevent serving stale data](#how-to-delay-request-handling-while-compilation-is-in-progress). ✅
-
-## How to get started?
-
-The easiest way to start is to analyse the demo application.
-
-To start the server:
-
-```bash
-git clone git@github.com:gajus/isomorphic-webpack-demo.git
-cd ./isomorphic-webpack-demo
-npm install
-export DEBUG=express:application,isomorphic-webpack
-npm start
-```
-
-This will start the server on http://127.0.0.1:8000/.
-
-```bash
-open http://127.0.0.1:8000/
-```
-
-## How does it work?
-
-Refer to the [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction) documentation.
 
 ## Setup
 
