@@ -1,0 +1,10 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "useCompilationPromise": {
+      "description": "Toggles compilation observer. Enable this feature to use `createCompilationPromise`.",
+      "type": "boolean"
+    }
+  },
+  "type": "object"
+}

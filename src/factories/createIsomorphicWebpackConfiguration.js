@@ -1,13 +1,28 @@
 // @flow
 
+import Ajv from 'ajv';
+import isomorphicWebpackConfigurationSchema from '../schemas/isomorphicWebpackConfigurationSchema.json';
 import type {
-  UserIsomorphicWebpackConfigType
+  UserIsomorphicWebpackConfigurationType,
+  IsomorphicWebpackConfigurationType
 } from '../types';
 
-export default (userIsomorphicWebpackConfig: UserIsomorphicWebpackConfigType = {}): UserIsomorphicWebpackConfigType => {
-  const defaultIsomorphicWebpackConfig = {};
+const ajv = Ajv();
+const validate = ajv.compile(isomorphicWebpackConfigurationSchema);
 
-  const isomorphicWebpackConfig = userIsomorphicWebpackConfig || defaultIsomorphicWebpackConfig;
+export default (userIsomorphicWebpackConfig: UserIsomorphicWebpackConfigurationType = {}): IsomorphicWebpackConfigurationType => {
+  if (!validate(userIsomorphicWebpackConfig)) {
+    // eslint-disable-next-line no-console
+    console.log('validate.errors', validate.errors);
 
-  return isomorphicWebpackConfig;
+    throw new Error('Invalid configuration.');
+  }
+
+  const isomorphicWebpackConfiguration = {
+    // eslint-disable-next-line no-undefined
+    isRequireOverride: userIsomorphicWebpackConfig.hasOwnProperty('isRequireOverride') ? userIsomorphicWebpackConfig.isRequireOverride : undefined,
+    useCompilationPromise: userIsomorphicWebpackConfig.hasOwnProperty('useCompilationPromise') ? Boolean(userIsomorphicWebpackConfig.useCompilationPromise) : false
+  };
+
+  return isomorphicWebpackConfiguration;
 };
