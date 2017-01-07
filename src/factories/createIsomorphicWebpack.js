@@ -9,7 +9,7 @@ import {
 } from 'source-map';
 import createDebug from 'debug';
 import type {
-  UserIsomorphicWebpackConfigType
+  UserIsomorphicWebpackConfigurationType
 } from '../types';
 import isRequestResolvable from '../utilities/isRequestResolvable';
 import resolveRequest from '../utilities/resolveRequest';
@@ -37,7 +37,7 @@ type ErrorPositionType = {|
   source: string
 |};
 
-export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigType): IsomorphicWebpackType => {
+export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigurationType): IsomorphicWebpackType => {
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);
   const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
   const compiler = createCompiler(compilerConfiguration);
