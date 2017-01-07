@@ -8,7 +8,25 @@
 
 <img src='https://cdn.rawgit.com/gajus/isomorphic-webpack/master/.README/isomorphic-webpack.svg' height='200' alt='isomorphic-webpack' />
 
-Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
+`isomorphic-webpack` is a program that runs server-side and enables rendering of the same code base client- and server-side.
+
+Put it another way, it is a service for rendering webpack applications server-side. All that can be rendered client-side (e.g. React, Angular, etc. applications) will be processed server-side and served as static HTML.
+
+Try it!
+
+```bash
+git clone git@github.com:gajus/isomorphic-webpack-demo.git
+cd ./isomorphic-webpack-demo
+npm install
+export DEBUG=express:application,isomorphic-webpack
+npm start
+```
+
+This will start the server on http://127.0.0.1:8000/.
+
+```bash
+open http://127.0.0.1:8000/
+```
 
 <a name="isomorphic-webpack-goals"></a>
 ## Goals
@@ -44,6 +62,7 @@ Abstracts universal consumption of modules bundled using [webpack](https://githu
     * [How to delay route initialisation until the first successful compilation?](#isomorphic-webpack-faq-how-to-delay-route-initialisation-until-the-first-successful-compilation)
     * [How to delay request handling while compilation is in progress?](#isomorphic-webpack-faq-how-to-delay-request-handling-while-compilation-is-in-progress)
     * [What makes `isomorphic-webpack` different from `webpack-isomorphic-tools`, `universal-webpack`, ...?](#isomorphic-webpack-faq-what-makes-isomorphic-webpack-different-from-webpack-isomorphic-tools-universal-webpack)
+    * [I thought we agreed to use the term "universal"?](#isomorphic-webpack-faq-i-thought-we-agreed-to-use-the-term-universal)
 
 
 <a name="isomorphic-webpack-setup"></a>
@@ -432,7 +451,8 @@ app.get('/', isomorphicMiddleware);
 |Supports stack trace.|✅|❌|❌|
 |Prevents serving stale data.|✅|❌|❌|
 |Overrides Node.js `require()`.|✅|✅|❌|
-|Uses webpack `target: "node"`.|❌|❌|✅|
+|Uses webpack [`target: "node"`](https://webpack.github.io/docs/configuration.html#target).|❌|❌|✅|
+|Provides [low-level API](https://github.com/gajus/isomorphic-webpack#isomorphic-webpack-setup-low-level-abstraction).|✅|❌|❌|
 
 From a subjective perspective, `isomorphic-webpack` is a lot easier to setup than any of the existing alternatives.
 
@@ -440,4 +460,13 @@ From a subjective perspective, `isomorphic-webpack` is a lot easier to setup tha
 >
 > Contact me to correct an error in the above comparison table, if you'd like to
 > add another comparison criteria, or to add another framework.
+
+<a name="isomorphic-webpack-faq-i-thought-we-agreed-to-use-the-term-universal"></a>
+### I thought we agreed to use the term &quot;universal&quot;?
+
+> TL;DR: **Isomorphism** is the functional aspect of seamlessly switching between client- and server-side rendering without losing state. **Universal** is a term used to emphasize the fact that a particular piece of JavaScript code is able to run in multiple environments.
+
+– https://medium.com/@ghengeveld/isomorphism-vs-universal-javascript-4b47fb481beb#.h7fikpuyk
+
+`isomorphic-webpack` is a program that runs server-side and enables rendering of the same code base client- and server-side.
 

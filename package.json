@@ -22,7 +22,7 @@
     "webpack-merge": "^2.1.0",
     "webpack-node-externals": "^1.5.4"
   },
-  "description": "Abstracts universal consumption of modules bundled using webpack.",
+  "description": "Abstracts universal consumption of application code base using webpack.",
   "devDependencies": {
     "ava": "^0.17.0",
     "babel-cli": "^6.18.0",

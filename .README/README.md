@@ -7,7 +7,25 @@
 
 <img src='https://cdn.rawgit.com/gajus/isomorphic-webpack/master/.README/isomorphic-webpack.svg' height='200' alt='isomorphic-webpack' />
 
-Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
+`isomorphic-webpack` is a program that runs server-side and enables rendering of the same code base client- and server-side.
+
+Put it another way, it is a service for rendering webpack applications server-side. All that can be rendered client-side (e.g. React, Angular, etc. applications) will be processed server-side and served as static HTML.
+
+Try it!
+
+```bash
+git clone git@github.com:gajus/isomorphic-webpack-demo.git
+cd ./isomorphic-webpack-demo
+npm install
+export DEBUG=express:application,isomorphic-webpack
+npm start
+```
+
+This will start the server on http://127.0.0.1:8000/.
+
+```bash
+open http://127.0.0.1:8000/
+```
 
 ## Goals
 
