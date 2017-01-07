@@ -32,7 +32,7 @@
     "babel-plugin-transform-export-extensions": "^6.8.0",
     "babel-plugin-transform-flow-comments": "^6.17.0",
     "babel-plugin-transform-object-rest-spread": "^6.19.0",
-    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-preset-env": "^1.1.6",
     "babel-register": "^6.18.0",
     "coveralls": "^2.11.15",
     "css-loader": "^0.26.1",
