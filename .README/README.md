@@ -9,7 +9,7 @@
 
 Abstracts universal consumption of modules bundled using [webpack](https://github.com/webpack/webpack).
 
-{"gitdown": "contents"}
+{"gitdown": "contents", "rootId": "isomorphic-webpack", "maxLevel": 5}
 
 ## Goals
 
