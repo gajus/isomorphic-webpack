@@ -42,7 +42,7 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('manifest', manifest);
 
-    const requestMap = createResourceMap(manifest);
+    const requestMap = createResourceMap(manifest.content);
 
     debug('requestMap', requestMap);
 
