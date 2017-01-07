@@ -21,8 +21,10 @@ type ResourceMapType = {
 export default (manifestContent: ManifestContentMapType): ResourceMapType => {
   const map = {};
 
-  for (const [path, {id}] of Object.entries(manifestContent)) {
-    map[path] = id;
+  const paths = Object.keys(manifestContent);
+
+  for (const path of paths) {
+    map[path] = manifestContent[path].id;
   }
 
   return map;
