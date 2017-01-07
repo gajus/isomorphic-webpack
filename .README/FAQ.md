@@ -59,9 +59,34 @@ export DEBUG=isomorphic-webpack:*
 
 ### How to subscribe to compiler events?
 
-Using `createIsomorphicWebpack` result has a `compiler` property. `compiler` is an instance of a webpack [`Compiler`](https://webpack.github.io/docs/node.js-api.html#compiler). Use it to subscribe to all compiler events, e.g.
+Using `createIsomorphicWebpack` result has a `compiler` property. `compiler` is an instance of a webpack [`Compiler`](https://webpack.github.io/docs/node.js-api.html#compiler). Use it to subscribe to all compiler events.
 
-Attempting to render a route server-side before the compiler has completed at least one compilation will produce an error. Therefore, it is desirable to delay the first server-side render until the compiler has completed at least one compilation.
+### How to delay route initialisation until the first successful compilation?
+
+Attempting to render a route server-side before the compiler has completed at least one compilation will produce an error, e.g.
+
+```diff
++SyntaxError: /src/app/style.css: Unexpected token (1:0)
++> 1 | .greetings {
++    | ^
++  2 |   font-weight: bold;
++  3 | }
++  4 |
+    at Parser.pp$5.raise (/node_modules/babylon/lib/index.js:4246:13)
+    at Parser.pp.unexpected (/node_modules/babylon/lib/index.js:1627:8)
+    at Parser.pp$3.parseExprAtom (/node_modules/babylon/lib/index.js:3586:12)
+    at Parser.parseExprAtom (/node_modules/babylon/lib/index.js:6402:22)
+    at Parser.pp$3.parseExprSubscripts (/node_modules/babylon/lib/index.js:3331:19)
+    at Parser.pp$3.parseMaybeUnary (/node_modules/babylon/lib/index.js:3311:19)
+    at Parser.pp$3.parseExprOps (/node_modules/babylon/lib/index.js:3241:19)
+    at Parser.pp$3.parseMaybeConditional (/node_modules/babylon/lib/index.js:3218:19)
+    at Parser.pp$3.parseMaybeAssign (/node_modules/babylon/lib/index.js:3181:19)
+    at Parser.parseMaybeAssign (/node_modules/babylon/lib/index.js:5694:20)
+```
+
+The error will vary depending on what loaders your application code depends on.
+
+Therefore, it is desirable to delay the first server-side render until the compiler has completed at least one compilation.
 
 ```js
 const {
