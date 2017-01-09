@@ -25,7 +25,19 @@ npm start
 This will start the server on http://127.0.0.1:8000/.
 
 ```bash
-open http://127.0.0.1:8000/
+$ curl http://127.0.0.1:8000/
+
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id='app'>
+      <div class="app-___style___greetings" data-reactroot="" data-reactid="1" data-react-checksum="72097819">Hello, World!</div>
+    </div>
+
+    <script src='/static/app.js'></script>
+  </body>
+</html>
 ```
 
 <a name="isomorphic-webpack-goals"></a>
