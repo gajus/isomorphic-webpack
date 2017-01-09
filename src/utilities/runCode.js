@@ -21,6 +21,12 @@ export default (code: string, userOptions: RunInNewContextType = {}): any => {
     console,
     document: window.document,
     ISOMORPHIC_WEBPACK: true,
+    process: {
+      env: {
+        // eslint-disable-next-line no-process-env
+        NODE_ENV: process.env.NODE_ENV
+      }
+    },
     require,
     window
   };
