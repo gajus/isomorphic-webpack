@@ -24,9 +24,13 @@ export default (userIsomorphicWebpackConfig: UserIsomorphicWebpackConfigurationT
 
   const isomorphicWebpackConfiguration = {
     // eslint-disable-next-line no-undefined
-    isRequireOverride: userIsomorphicWebpackConfig.hasOwnProperty('isRequireOverride') ? userIsomorphicWebpackConfig.isRequireOverride : undefined,
-    nodeExternalsWhitelist: userIsomorphicWebpackConfig.hasOwnProperty('nodeExternalsWhitelist') ? userIsomorphicWebpackConfig.nodeExternalsWhitelist : [],
-    useCompilationPromise: userIsomorphicWebpackConfig.hasOwnProperty('useCompilationPromise') ? Boolean(userIsomorphicWebpackConfig.useCompilationPromise) : false
+    isRequireOverride: userIsomorphicWebpackConfig.isRequireOverride === undefined ? undefined : userIsomorphicWebpackConfig.isRequireOverride,
+
+    // eslint-disable-next-line no-undefined
+    nodeExternalsWhitelist: userIsomorphicWebpackConfig.nodeExternalsWhitelist === undefined ? [] : userIsomorphicWebpackConfig.nodeExternalsWhitelist,
+
+    // eslint-disable-next-line no-undefined
+    useCompilationPromise: userIsomorphicWebpackConfig.useCompilationPromise === undefined ? false : Boolean(userIsomorphicWebpackConfig.useCompilationPromise)
   };
 
   return isomorphicWebpackConfiguration;
