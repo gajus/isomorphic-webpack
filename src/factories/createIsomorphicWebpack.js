@@ -39,7 +39,7 @@ type ErrorPositionType = {|
 
 export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigurationType): IsomorphicWebpackType => {
   const isomorphicWebpackConfiguration = createIsomorphicWebpackConfiguration(userIsomorphicWebpackConfiguration);
-  const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
+  const compilerConfiguration = createCompilerConfiguration(webpackConfiguration, isomorphicWebpackConfiguration.nodeExternalsWhitelist);
   const compiler = createCompiler(compilerConfiguration);
 
   let createCompilationPromise;

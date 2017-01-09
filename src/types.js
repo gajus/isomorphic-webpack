@@ -4,11 +4,13 @@
 type IsRequireOverrideType = (request: Object, parent?: Object) => boolean;
 
 export type UserIsomorphicWebpackConfigurationType = {
-  useCompilationPromise?: boolean,
-  isRequireOverride?: IsRequireOverrideType
+  isRequireOverride?: IsRequireOverrideType,
+  nodeExternalsWhitelist?: Array<string | RegExp>,
+  useCompilationPromise?: boolean
 };
 
 export type IsomorphicWebpackConfigurationType = {|
-  +useCompilationPromise: boolean,
-  +isRequireOverride?: IsRequireOverrideType
+  +isRequireOverride?: IsRequireOverrideType,
+  +nodeExternalsWhitelist: Array<string | RegExp>,
+  +useCompilationPromise: boolean
 |};
