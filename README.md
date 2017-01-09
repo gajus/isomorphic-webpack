@@ -143,6 +143,11 @@ If you have a requirement for a configuration, [raise an issue](https://github.c
 <a name="isomorphic-webpack-setup-low-level-abstraction"></a>
 ### Low-level abstraction
 
+> This section of the documentation is included for transparency purposes only.
+> If you are planning on using the low-level abstraction, please take time to
+> open an issue and discuss your use case. If it is a generic use case,
+> I will be happy to add it to the high-level abstraction.
+
 ```js
 import {
   createCompiler,
