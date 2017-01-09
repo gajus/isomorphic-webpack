@@ -13,7 +13,7 @@ import type {
 } from '../types';
 import isRequestResolvable from '../utilities/isRequestResolvable';
 import resolveRequest from '../utilities/resolveRequest';
-import runCode from '../utilities/runCode';
+import evalCodeInBrowser from '../utilities/evalCodeInBrowser';
 import createCompiler from './createCompiler';
 import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
@@ -28,6 +28,7 @@ type IsomorphicWebpackType = {|
    */
   compiler: Compiler,
   createCompilationPromise: Function,
+  evalCode: Function,
   formatErrorStack: Function
 |};
 
@@ -86,20 +87,17 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   let restoreOriginalRequire;
   let bundleSourceMapConsumer;
 
-  const compilerCallback = createCompilerCallback(compiler, ({
-    bundleCode,
-    bundleSourceMap,
-    requestMap
-  }) => {
-    bundleSourceMapConsumer = new SourceMapConsumer(bundleSourceMap);
+  let currentBundleCode;
+  let currentRequestMap;
 
-    const module = runCode(bundleCode);
+  const evalCode = (windowUrl?: string) => {
+    const module = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
 
     const isOverride = (request, parent) => {
-      const override = isRequestResolvable(compiler.options.context, requestMap, request, parent.filename);
+      const override = isRequestResolvable(compiler.options.context, currentRequestMap, request, parent.filename);
 
       if (override) {
-        const matchedRequest = resolveRequest(compiler.options.context, requestMap, request, parent.filename);
+        const matchedRequest = resolveRequest(compiler.options.context, currentRequestMap, request, parent.filename);
 
         if (isomorphicWebpackConfiguration.isRequireOverride && !isomorphicWebpackConfiguration.isRequireOverride(matchedRequest)) {
           return false;
@@ -110,8 +108,8 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     };
 
     const resolveOverride = (request, parent) => {
-      const matchedRequest = resolveRequest(compiler.options.context, requestMap, request, parent.filename);
-      const moduleId = requestMap[matchedRequest];
+      const matchedRequest = resolveRequest(compiler.options.context, currentRequestMap, request, parent.filename);
+      const moduleId = currentRequestMap[matchedRequest];
 
       return module(moduleId);
     };
@@ -121,6 +119,18 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     }
 
     restoreOriginalRequire = overrideRequire(isOverride, resolveOverride);
+  };
+
+  const compilerCallback = createCompilerCallback(compiler, ({
+    bundleCode,
+    bundleSourceMap,
+    requestMap
+  }) => {
+    bundleSourceMapConsumer = new SourceMapConsumer(bundleSourceMap);
+    currentBundleCode = bundleCode;
+    currentRequestMap = requestMap;
+
+    evalCode();
   });
 
   compiler.watch({}, compilerCallback);
@@ -165,6 +175,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   return {
     compiler,
     createCompilationPromise,
+    evalCode,
     formatErrorStack
   };
 };

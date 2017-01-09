@@ -14,8 +14,12 @@ type RunInNewContextType = {
 /**
  * Runs code and returns the value of the last expression evaluated.
  */
-export default (code: string, userOptions: RunInNewContextType = {}): any => {
+export default (code: string, userOptions: RunInNewContextType = {}, windowUrl?: string): any => {
   const window = jsdom.jsdom('<html><body></body></html>').defaultView;
+
+  if (windowUrl) {
+    jsdom.changeURL(window, windowUrl);
+  }
 
   const sandbox = {
     console,

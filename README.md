@@ -114,6 +114,7 @@ type IsomorphicWebpackType = {|
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
   +compiler: Compiler,
+  +evalCode: Function,
   +formatErrorStack: Function
 |};
 
@@ -130,14 +131,17 @@ createIsomorphicWebpack(webpackConfiguration: WebpackConfigurationType, isomorph
   "properties": {
     "nodeExternalsWhitelist": {
       "description": "An array of paths to whitelist in the webpack `external` configuration. The default behaviour is to externalise all modules present in the `node_modules/` directory.",
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "instanceof": "RegExp"
-        }
-      ]
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "instanceof": "RegExp"
+          }
+        ]
+      },
+      "type": "array"
     },
     "useCompilationPromise": {
       "description": "Toggles compilation observer. Enable this feature to use `createCompilationPromise`.",
