@@ -7,14 +7,15 @@ import {
 import nodeExternals from 'webpack-node-externals';
 import webpackMerge from 'webpack-merge';
 
-export default (webpackConfiguration: Object): Object => {
+export default (webpackConfiguration: Object, nodeExternalsWhitelist: Array<string | RegExp> = []): Object => {
   const manifestPath = path.resolve(webpackConfiguration.context, 'manifest.json');
 
   const compilerConfiguration = webpackMerge(webpackConfiguration, {
     devtool: 'sourcemap',
     externals: [
       nodeExternals({
-        importType: 'commonjs2'
+        importType: 'commonjs2',
+        whitelist: nodeExternalsWhitelist
       })
 
       // @todo

@@ -1,6 +1,7 @@
 // @flow
 
 import Ajv from 'ajv';
+import addAjvKeywords from 'ajv-keywords';
 import isomorphicWebpackConfigurationSchema from '../schemas/isomorphicWebpackConfigurationSchema.json';
 import type {
   UserIsomorphicWebpackConfigurationType,
@@ -8,6 +9,9 @@ import type {
 } from '../types';
 
 const ajv = Ajv();
+
+addAjvKeywords(ajv);
+
 const validate = ajv.compile(isomorphicWebpackConfigurationSchema);
 
 export default (userIsomorphicWebpackConfig: UserIsomorphicWebpackConfigurationType = {}): IsomorphicWebpackConfigurationType => {

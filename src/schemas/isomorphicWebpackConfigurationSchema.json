@@ -1,6 +1,17 @@
 {
   "additionalProperties": false,
   "properties": {
+    "nodeExternalsWhitelist": {
+      "description": "An array of paths to whitelist in the webpack `external` configuration. The default behaviour is to externalise all modules present in the `node_modules/` directory.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "instanceof": "RegExp"
+        }
+      ]
+    },
     "useCompilationPromise": {
       "description": "Toggles compilation observer. Enable this feature to use `createCompilationPromise`.",
       "type": "boolean"
