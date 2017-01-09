@@ -112,6 +112,10 @@ If you have a requirement for a configuration, [raise an issue](https://github.c
 
 {"gitdown": "include", "file": "./HANDLING_ERRORS.md"}
 
+## Reading list
+
+* [Developing isomorphic applications using webpack](https://medium.com/@gajus/developing-isomorphic-applications-using-webpack-eca814a418ad#.17l1qc77j). Introduction to `isomorphic-webpack`, how to use webpack loaders and dependencies that depend on the browser environment.
+
 ## FAQ
 
 {"gitdown": "include", "file": "./FAQ.md"}

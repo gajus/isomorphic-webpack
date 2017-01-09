@@ -63,6 +63,7 @@ $ curl http://127.0.0.1:8000/
         * [Isomorphic webpack configuration](#isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration)
     * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
 * [Handling errors](#isomorphic-webpack-handling-errors)
+* [Reading list](#isomorphic-webpack-reading-list)
 * [FAQ](#isomorphic-webpack-faq)
     * [How to get started?](#isomorphic-webpack-faq-how-to-get-started)
     * [How does `isomorphic-webpack` work?](#isomorphic-webpack-faq-how-does-isomorphic-webpack-work)
@@ -262,6 +263,11 @@ ReferenceError: props is not defined
 
 Note: References to a generated code that cannot be resolved in a source map are ignored ([#5](https://github.com/gajus/isomorphic-webpack/issues/5)).
 
+
+<a name="isomorphic-webpack-reading-list"></a>
+## Reading list
+
+* [Developing isomorphic applications using webpack](https://medium.com/@gajus/developing-isomorphic-applications-using-webpack-eca814a418ad#.17l1qc77j). Introduction to `isomorphic-webpack`, how to use webpack loaders and dependencies that depend on the browser environment.
 
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
