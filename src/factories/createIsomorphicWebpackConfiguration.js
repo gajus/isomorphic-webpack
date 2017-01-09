@@ -25,6 +25,7 @@ export default (userIsomorphicWebpackConfig: UserIsomorphicWebpackConfigurationT
   const isomorphicWebpackConfiguration = {
     // eslint-disable-next-line no-undefined
     isRequireOverride: userIsomorphicWebpackConfig.hasOwnProperty('isRequireOverride') ? userIsomorphicWebpackConfig.isRequireOverride : undefined,
+    nodeExternalsWhitelist: userIsomorphicWebpackConfig.hasOwnProperty('nodeExternalsWhitelist') ? userIsomorphicWebpackConfig.nodeExternalsWhitelist : [],
     useCompilationPromise: userIsomorphicWebpackConfig.hasOwnProperty('useCompilationPromise') ? Boolean(userIsomorphicWebpackConfig.useCompilationPromise) : false
   };
 
