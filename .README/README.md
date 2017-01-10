@@ -116,6 +116,7 @@ If you have a requirement for a configuration, [raise an issue](https://github.c
 ## Reading list
 
 * [Developing isomorphic applications using webpack](https://medium.com/@gajus/developing-isomorphic-applications-using-webpack-eca814a418ad#.17l1qc77j). Introduction to `isomorphic-webpack`, how to use webpack loaders and dependencies that depend on the browser environment.
+* [isomorphic-webpack - Universal module consumption using webpack - Interview with Gajus Kuizinas](http://survivejs.com/blog/isomorphic-webpack-interview/).
 
 ## FAQ
 
