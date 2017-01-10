@@ -46,9 +46,24 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    const entryChunkName = Object.keys(compiler.options.entry)[0];
+    let entryChunkName;
 
-    debug('entryChunkName', entryChunkName);
+    if (Array.isArray(compiler.options.entry)) {
+      entryChunkName = 'main';
+    } else {
+      const bundleNames = Object.keys(compiler.options.entry);
+
+      if (bundleNames.length === 0) {
+        throw new Error('Invalid "entry" configuration.');
+      } else if (bundleNames.length > 1) {
+        // eslint-disable-next-line no-console
+        console.log('Multiple bundles are not supported. See https://github.com/gajus/isomorphic-webpack/issues/10.');
+
+        throw new Error('Unsupported "entry" configuration.');
+      }
+
+      entryChunkName = bundleNames[0];
+    }
 
     const absoluteEntryChunkName = path.resolve(compiler.options.output.path, entryChunkName + '.js');
 
