@@ -46,13 +46,24 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    let entryChunkName = 'main';
+    let entryChunkName;
 
-    if (!compiler.options.entry.length) {
-      entryChunkName = Object.keys(compiler.options.entry)[0];
+    if (Array.isArray(compiler.options.entry)) {
+      entryChunkName = 'main';
+    } else {
+      const bundleNames = Object.keys(compiler.options.entry);
+
+      if (bundleNames.length === 0) {
+        throw new Error('Invalid "entry" configuration.');
+      } else if (bundleNames.length > 1) {
+        // eslint-disable-next-line no-console
+        console.log('Multiple bundles are not supported. See https://github.com/gajus/isomorphic-webpack/issues/10.');
+
+        throw new Error('Unsupported "entry" configuration.');
+      }
+
+      entryChunkName = bundleNames[0];
     }
-
-    debug('entryChunkName', entryChunkName);
 
     let formattedOutputName = entryChunkName;
 

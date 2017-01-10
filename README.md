@@ -269,6 +269,7 @@ Note: References to a generated code that cannot be resolved in a source map are
 ## Reading list
 
 * [Developing isomorphic applications using webpack](https://medium.com/@gajus/developing-isomorphic-applications-using-webpack-eca814a418ad#.17l1qc77j). Introduction to `isomorphic-webpack`, how to use webpack loaders and dependencies that depend on the browser environment.
+* [isomorphic-webpack - Universal module consumption using webpack - Interview with Gajus Kuizinas](http://survivejs.com/blog/isomorphic-webpack-interview/).
 
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
