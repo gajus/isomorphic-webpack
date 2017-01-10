@@ -68,6 +68,9 @@
     "reporter": [
       "text-lcov"
     ],
+    "require": [
+      "babel-register"
+    ],
     "sourceMap": false
   },
   "peerDependencies": {
