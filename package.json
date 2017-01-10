@@ -37,6 +37,7 @@
     "babel-preset-env": "^1.1.6",
     "babel-register": "^6.18.0",
     "coveralls": "^2.11.15",
+    "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
     "eslint": "^3.11.1",
     "eslint-config-canonical": "^6.0.0",
@@ -67,9 +68,6 @@
     "reporter": [
       "text-lcov"
     ],
-    "require": [
-      "babel-register"
-    ],
     "sourceMap": false
   },
   "peerDependencies": {
@@ -80,11 +78,11 @@
     "url": "https://github.com/gajus/isomorphic-webpack"
   },
   "scripts": {
-    "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
+    "build": "cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
     "generate-documentation": "gitdown ./.README/README.md --output-file ./README.md",
     "lint": "eslint ./src ./test && flow",
     "precommit": "npm run lint && npm run test",
-    "test": "NODE_ENV=development ava --verbose && npm run lint && npm run build"
+    "test": "cross-env NODE_ENV=development ava --verbose && npm run lint && npm run build"
   },
   "version": "1.4.6"
 }

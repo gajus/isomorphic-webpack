@@ -3,6 +3,7 @@
 import path from 'path';
 import isInlineLoader from './isInlineLoader';
 import isRequestInRequestMap from './isRequestInRequestMap';
+import {resolvePath, normalizePath} from './normalizeResourcePath';
 
 /**
  * Tells whether to override a require request.
@@ -22,15 +23,18 @@ export default (context: string, requestMap: Object, request: string, parentFile
     return false;
   }
 
-  const absoluteTargetResourcePath = path.resolve(path.dirname(parentFilename), request);
+  const absoluteTargetResourcePath = resolvePath(path.dirname(parentFilename), request);
+  const contextAbsoluteResourcePath = resolvePath(path.dirname(context));
 
   // Might need to override resource if the absolute path
   // is within the project context path.
-  if (!absoluteTargetResourcePath.startsWith(context)) {
+  if (!absoluteTargetResourcePath.startsWith(contextAbsoluteResourcePath)) {
     return false;
   }
 
-  const relativeTargetResourcePath = './' + path.relative(context, absoluteTargetResourcePath);
+  const relativeTargetResourcePath = './' + normalizePath(path.relative(context, absoluteTargetResourcePath));
+
+  // this replace allow isomorphic-webpack to work on Window
 
   if (isRequestInRequestMap(relativeTargetResourcePath, requestMap)) {
     return true;
@@ -40,7 +44,7 @@ export default (context: string, requestMap: Object, request: string, parentFile
     return true;
   }
 
-  if (isRequestInRequestMap('./' + path.join(relativeTargetResourcePath, 'index.js'), requestMap)) {
+  if (isRequestInRequestMap('./' + normalizePath(path.join(relativeTargetResourcePath, 'index.js')), requestMap)) {
     return true;
   }
 

@@ -46,12 +46,23 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    const entryChunkName = Object.keys(compiler.options.entry)[0];
+    let entryChunkName = 'main';
+
+    if (!compiler.options.entry.length) {
+      entryChunkName = Object.keys(compiler.options.entry)[0];
+    }
 
     debug('entryChunkName', entryChunkName);
 
-    const absoluteEntryChunkName = path.resolve(compiler.options.output.path, entryChunkName + '.js');
+    let formattedOutputName = entryChunkName;
 
+    if (compiler && compiler.options && compiler.options.output && compiler.options.output.filename) {
+      formattedOutputName = compiler.options.output.filename.replace('[name]', entryChunkName);
+    }
+
+    const absoluteEntryChunkName = path.resolve(compiler.options.output.path, formattedOutputName);
+
+    debug('absoluteEntryChunkName', absoluteEntryChunkName);
     const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
 
     const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryChunkName + '.map', 'utf-8'));
