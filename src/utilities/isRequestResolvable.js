@@ -3,7 +3,10 @@
 import path from 'path';
 import isInlineLoader from './isInlineLoader';
 import isRequestInRequestMap from './isRequestInRequestMap';
-import {resolvePath, normalizePath} from './normalizeResourcePath';
+import {
+  resolvePath,
+  normalizePath
+} from './normalizeResourcePath';
 
 /**
  * Tells whether to override a require request.
