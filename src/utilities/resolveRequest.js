@@ -3,7 +3,10 @@
 import path from 'path';
 import enhancedResolve from 'enhanced-resolve';
 import isRequestInRequestMap from './isRequestInRequestMap';
-import {resolvePath, normalizePath} from './normalizeResourcePath';
+import {
+  resolvePath,
+  normalizePath
+} from './normalizeResourcePath';
 
 const resolveLoaderSync = enhancedResolve.loader.sync;
 
