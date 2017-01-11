@@ -158,7 +158,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   };
 
   const formatErrorStack = (errorStack: string): string => {
-    return errorStack.replace(/\(isomorphic-webpack:(\d+):(\d+)\)/g, (match, lineNumber, columnNumber) => {
+    return errorStack.replace(/isomorphic-webpack:(\d+):(\d+)/g, (match, lineNumber, columnNumber) => {
       const targetLineNumber = Number(lineNumber);
       const targetColumnNumber = Number(columnNumber);
 
@@ -168,7 +168,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
 
       const originalPosition = getOriginalPosition(targetLineNumber, targetColumnNumber);
 
-      return '(' + originalPosition.source + ':' + originalPosition.line + ':' + originalPosition.column + ')';
+      return originalPosition.source + ':' + originalPosition.line + ':' + originalPosition.column;
     });
   };
 
