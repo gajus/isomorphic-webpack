@@ -4,7 +4,6 @@ import path from 'path';
 import isInlineLoader from './isInlineLoader';
 import isRequestInRequestMap from './isRequestInRequestMap';
 import {
-  resolvePath,
   normalizePath
 } from './normalizeResourcePath';
 
@@ -26,8 +25,8 @@ export default (context: string, requestMap: Object, request: string, parentFile
     return false;
   }
 
-  const absoluteTargetResourcePath = resolvePath(path.dirname(parentFilename), request);
-  const contextAbsoluteResourcePath = resolvePath(path.dirname(context));
+  const absoluteTargetResourcePath = normalizePath(path.resolve(path.dirname(parentFilename), request));
+  const contextAbsoluteResourcePath = normalizePath(path.resolve(context));
 
   // Might need to override resource if the absolute path
   // is within the project context path.

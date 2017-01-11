@@ -4,7 +4,6 @@ import path from 'path';
 import enhancedResolve from 'enhanced-resolve';
 import isRequestInRequestMap from './isRequestInRequestMap';
 import {
-  resolvePath,
   normalizePath
 } from './normalizeResourcePath';
 
@@ -23,7 +22,7 @@ export default (context: string, requestMap: Object, request: string, parentFile
       return normalizePath(path.relative(context, loaderAbsolutePath));
     });
 
-  const absoluteRequestPath = resolvePath(path.dirname(parentFilename), requestFilePath);
+  const absoluteRequestPath = normalizePath(path.resolve(path.dirname(parentFilename), requestFilePath));
   const relativeTargetResourcePath = './' + normalizePath(path.relative(context, absoluteRequestPath));
 
   // this replace allow isomorphic-webpack to work on Window

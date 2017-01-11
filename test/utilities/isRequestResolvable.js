@@ -10,7 +10,7 @@ test('false if absolute path', (t) => {
 });
 
 test('false if request path is not under the context path', (t) => {
-  t.true(isRequestResolvable('/foo', {}, './index.js', '/bar') === false);
+  t.true(isRequestResolvable('/foo', {}, './index.js', '/') === false);
 });
 
 test('true if request path can be resolved to a resource', (t) => {
