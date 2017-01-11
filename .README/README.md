@@ -90,6 +90,7 @@ type IsomorphicWebpackType = {|
    */
   +compiler: Compiler,
   +evalCode: Function,
+  +createCompilationPromise: Function,
   +formatErrorStack: Function
 |};
 
