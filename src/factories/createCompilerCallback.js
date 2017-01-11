@@ -38,6 +38,10 @@ export default (compiler: Compiler, callback: Function): Function => {
       return;
     }
 
+    if (!outputFileSystem.existsSync(manifestPath)) {
+      throw new Error('Manifest file does not exist.');
+    }
+
     const manifest = JSON.parse(outputFileSystem.readFileSync(manifestPath));
 
     debug('manifest', manifest);
@@ -66,6 +70,14 @@ export default (compiler: Compiler, callback: Function): Function => {
     }
 
     const absoluteEntryChunkName = path.resolve(compiler.options.output.path, entryChunkName + '.js');
+
+    if (!outputFileSystem.existsSync(absoluteEntryChunkName)) {
+      throw new Error('Bundle file does not exist.');
+    }
+
+    if (!outputFileSystem.existsSync(absoluteEntryChunkName + '.map')) {
+      throw new Error('Bundle map file does not exist.');
+    }
 
     const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
 
