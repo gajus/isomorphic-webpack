@@ -33,9 +33,9 @@ type IsomorphicWebpackType = {|
 |};
 
 type ErrorPositionType = {|
-  column: number,
-  line: number,
-  source: string
+  +column: number,
+  +line: number,
+  +source: string
 |};
 
 export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigurationType): IsomorphicWebpackType => {
