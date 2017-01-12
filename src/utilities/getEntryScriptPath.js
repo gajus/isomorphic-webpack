@@ -21,7 +21,7 @@ export default (entry: WebpackEntryConfigurationType): string => {
       throw new Error('Unsupported "entry" configuration.');
     }
 
-    const bundle = entry[bundleNames[0]][0];
+    const bundle = entry[bundleNames[0]];
 
     if (typeof bundle === 'string') {
       return bundle;
