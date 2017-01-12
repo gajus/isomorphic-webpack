@@ -10,18 +10,18 @@ export default (entry: WebpackEntryConfigurationType): string => {
   } else if (Array.isArray(entry)) {
     return entry[entry.length - 1];
   } else {
-    const bundles = Object.values(entry);
+    const bundleNames = Object.keys(entry);
 
-    if (bundles.length === 0) {
+    if (bundleNames.length === 0) {
       throw new Error('Invalid "entry" configuration.');
-    } else if (bundles.length > 1) {
+    } else if (bundleNames.length > 1) {
       // eslint-disable-next-line no-console
       console.log('Multiple bundles are not supported. See https://github.com/gajus/isomorphic-webpack/issues/10.');
 
       throw new Error('Unsupported "entry" configuration.');
     }
 
-    const bundle = bundles[0];
+    const bundle = entry[bundleNames[0]][0];
 
     if (typeof bundle === 'string') {
       return bundle;
