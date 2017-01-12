@@ -12,6 +12,7 @@ import type {
   UserIsomorphicWebpackConfigurationType
 } from '../types';
 import evalCodeInBrowser from '../utilities/evalCodeInBrowser';
+import getEntryScriptPath from '../utilities/getEntryScriptPath';
 import createCompiler from './createCompiler';
 import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
@@ -90,28 +91,9 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   const evalBundleCode = (windowUrl?: string) => {
     const module = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
 
-    // @todo abstract into a utility function
-    let entryScriptPath;
+    const entryScriptPath = getEntryScriptPath(compiler.options.entry);
 
-    if (typeof compiler.options.entry === 'string') {
-      entryScriptPath = compiler.options.entry;
-    } else if (Array.isArray(compiler.options.entry)) {
-      entryScriptPath = webpackConfiguration.entry[webpackConfiguration.entry.length - 1];
-    } else {
-      const bundles = Object.values(compiler.options.entry);
-
-      if (bundles.length === 0) {
-        throw new Error('Invalid "entry" configuration.');
-      } else if (bundles.length > 1) {
-        // eslint-disable-next-line no-console
-        console.log('Multiple bundles are not supported. See https://github.com/gajus/isomorphic-webpack/issues/10.');
-
-        throw new Error('Unsupported "entry" configuration.');
-      }
-
-      // $FlowFixMe
-      entryScriptPath = bundles[0][bundles[0].length - 1];
-    }
+    debug('entryScriptPath', entryScriptPath);
 
     // @todo Make it work in Windows.
     const relativeEntryScriptPath = './' + path.relative(webpackConfiguration.context, require.resolve(entryScriptPath));

@@ -7,6 +7,7 @@ import {
 } from 'webpack';
 import createDebug from 'debug';
 import findInstance from '../utilities/findInstance';
+import getBundleName from '../utilities/getBundleName';
 import createResourceMap from './createResourceMap';
 
 const debug = createDebug('isomorphic-webpack');
@@ -50,39 +51,23 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    let entryChunkName;
+    const bundleName = getBundleName(compiler.options.entry);
 
-    // @todo abstract into a utility function
-    if (typeof compiler.options.entry === 'string' || Array.isArray(compiler.options.entry)) {
-      entryChunkName = 'main';
-    } else {
-      const bundleNames = Object.keys(compiler.options.entry);
+    debug('bundleName', bundleName);
 
-      if (bundleNames.length === 0) {
-        throw new Error('Invalid "entry" configuration.');
-      } else if (bundleNames.length > 1) {
-        // eslint-disable-next-line no-console
-        console.log('Multiple bundles are not supported. See https://github.com/gajus/isomorphic-webpack/issues/10.');
+    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName + '.js');
 
-        throw new Error('Unsupported "entry" configuration.');
-      }
-
-      entryChunkName = bundleNames[0];
-    }
-
-    const absoluteEntryChunkName = path.resolve(compiler.options.output.path, entryChunkName + '.js');
-
-    if (!outputFileSystem.existsSync(absoluteEntryChunkName)) {
+    if (!outputFileSystem.existsSync(absoluteEntryBundleName)) {
       throw new Error('Bundle file does not exist.');
     }
 
-    if (!outputFileSystem.existsSync(absoluteEntryChunkName + '.map')) {
+    if (!outputFileSystem.existsSync(absoluteEntryBundleName + '.map')) {
       throw new Error('Bundle map file does not exist.');
     }
 
-    const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
+    const bundleCode = outputFileSystem.readFileSync(absoluteEntryBundleName, 'utf-8');
 
-    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryChunkName + '.map', 'utf-8'));
+    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryBundleName + '.map', 'utf-8'));
 
     callback({
       bundleCode,
