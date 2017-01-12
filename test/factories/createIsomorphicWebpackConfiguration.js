@@ -5,8 +5,6 @@ test('creates configuration with default values', (t) => {
   const defaultConfiguration = createIsomorphicWebpackConfiguration();
 
   t.deepEqual(defaultConfiguration, {
-    // eslint-disable-next-line no-undefined
-    isRequireOverride: undefined,
     nodeExternalsWhitelist: [],
     useCompilationPromise: false
   });
@@ -18,8 +16,6 @@ test('user input overwrites default values', (t) => {
   });
 
   t.deepEqual(configuration, {
-    // eslint-disable-next-line no-undefined
-    isRequireOverride: undefined,
     nodeExternalsWhitelist: [],
     useCompilationPromise: true
   });

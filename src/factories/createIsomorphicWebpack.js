@@ -1,9 +1,9 @@
 // @flow
 
+import path from 'path';
 import {
   Compiler
 } from 'webpack';
-import overrideRequire from 'override-require';
 import {
   SourceMapConsumer
 } from 'source-map';
@@ -11,8 +11,6 @@ import createDebug from 'debug';
 import type {
   UserIsomorphicWebpackConfigurationType
 } from '../types';
-import isRequestResolvable from '../utilities/isRequestResolvable';
-import resolveRequest from '../utilities/resolveRequest';
 import evalCodeInBrowser from '../utilities/evalCodeInBrowser';
 import createCompiler from './createCompiler';
 import createCompilerCallback from './createCompilerCallback';
@@ -28,7 +26,7 @@ type IsomorphicWebpackType = {|
    */
   compiler: Compiler,
   createCompilationPromise: Function,
-  evalCode: Function,
+  evalBundleCode: Function,
   formatErrorStack: Function
 |};
 
@@ -84,41 +82,27 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     };
   }
 
-  let restoreOriginalRequire;
   let bundleSourceMapConsumer;
 
   let currentBundleCode;
   let currentRequestMap;
 
-  const evalCode = (windowUrl?: string) => {
+  const evalBundleCode = (windowUrl?: string) => {
     const module = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
 
-    const isOverride = (request, parent) => {
-      const override = isRequestResolvable(compiler.options.context, currentRequestMap, request, parent.filename);
+    // @todo Handle different entry types (string, array, object).
+    const entryScriptPath = webpackConfiguration.entry[webpackConfiguration.entry.length - 1];
 
-      if (override) {
-        const matchedRequest = resolveRequest(compiler.options.context, currentRequestMap, request, parent.filename);
+    // @todo Make it work in Windows.
+    const relativeEntryScriptPath = './' + path.relative(webpackConfiguration.context, require.resolve(entryScriptPath));
 
-        if (isomorphicWebpackConfiguration.isRequireOverride && !isomorphicWebpackConfiguration.isRequireOverride(matchedRequest)) {
-          return false;
-        }
-      }
+    const moduleId = currentRequestMap[relativeEntryScriptPath];
 
-      return override;
-    };
-
-    const resolveOverride = (request, parent) => {
-      const matchedRequest = resolveRequest(compiler.options.context, currentRequestMap, request, parent.filename);
-      const moduleId = currentRequestMap[matchedRequest];
-
-      return module(moduleId);
-    };
-
-    if (restoreOriginalRequire) {
-      restoreOriginalRequire();
+    if (!moduleId) {
+      throw new Error('Cannot determine entry module ID.');
     }
 
-    restoreOriginalRequire = overrideRequire(isOverride, resolveOverride);
+    return module(moduleId);
   };
 
   const compilerCallback = createCompilerCallback(compiler, ({
@@ -129,8 +113,6 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     bundleSourceMapConsumer = new SourceMapConsumer(bundleSourceMap);
     currentBundleCode = bundleCode;
     currentRequestMap = requestMap;
-
-    evalCode();
   });
 
   compiler.watch({}, compilerCallback);
@@ -175,7 +157,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   return {
     compiler,
     createCompilationPromise,
-    evalCode,
+    evalBundleCode,
     formatErrorStack
   };
 };

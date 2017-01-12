@@ -115,8 +115,8 @@ type IsomorphicWebpackType = {|
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
   +compiler: Compiler,
-  +evalCode: Function,
   +createCompilationPromise: Function,
+  +evalBundleCode: Function,
   +formatErrorStack: Function
 |};
 
@@ -419,7 +419,7 @@ app.get('/', isomorphicMiddleware);
 |Server-side hot reloading of modules.|✅|✅|✅|
 |Supports stack trace.|✅|❌|❌|
 |Prevents serving stale data.|✅|❌|❌|
-|Does not override Node.js `require()`.|❌|❌|✅|
+|Does not override Node.js `require()`.|✅|❌|✅|
 |Uses webpack [`target: "node"`](https://webpack.github.io/docs/configuration.html#target).|✅|❌|✅|
 |Provides [low-level API](https://github.com/gajus/isomorphic-webpack#isomorphic-webpack-setup-low-level-abstraction).|✅|❌|❌|
 
