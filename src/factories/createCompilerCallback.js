@@ -52,7 +52,8 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     let entryChunkName;
 
-    if (Array.isArray(compiler.options.entry)) {
+    // @todo abstract into a utility function
+    if (typeof compiler.options.entry === 'string' || Array.isArray(compiler.options.entry)) {
       entryChunkName = 'main';
     } else {
       const bundleNames = Object.keys(compiler.options.entry);
