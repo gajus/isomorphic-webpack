@@ -89,7 +89,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   let currentRequestMap;
 
   const evalBundleCode = (windowUrl?: string) => {
-    const module = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
+    const requireModule = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
 
     const entryScriptPath = getEntryScriptPath(compiler.options.entry);
 
@@ -106,7 +106,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
 
     debug('evaluating module ID %i', moduleId);
 
-    return module(moduleId);
+    return requireModule(moduleId);
   };
 
   const compilerCallback = createCompilerCallback(compiler, ({
