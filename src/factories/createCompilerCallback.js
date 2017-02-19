@@ -7,6 +7,7 @@ import {
 } from 'webpack';
 import createDebug from 'debug';
 import findInstance from '../utilities/findInstance';
+import getBundleName from '../utilities/getBundleName';
 import createResourceMap from './createResourceMap';
 
 const debug = createDebug('isomorphic-webpack');
@@ -38,6 +39,10 @@ export default (compiler: Compiler, callback: Function): Function => {
       return;
     }
 
+    if (!outputFileSystem.existsSync(manifestPath)) {
+      throw new Error('Manifest file does not exist.');
+    }
+
     const manifest = JSON.parse(outputFileSystem.readFileSync(manifestPath));
 
     debug('manifest', manifest);
@@ -46,15 +51,23 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    const entryChunkName = Object.keys(compiler.options.entry)[0];
+    const bundleName = getBundleName(compiler.options.entry);
 
-    debug('entryChunkName', entryChunkName);
+    debug('bundleName', bundleName);
 
-    const absoluteEntryChunkName = path.resolve(compiler.options.output.path, entryChunkName + '.js');
+    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName + '.js');
 
-    const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
+    if (!outputFileSystem.existsSync(absoluteEntryBundleName)) {
+      throw new Error('Bundle file does not exist.');
+    }
 
-    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryChunkName + '.map', 'utf-8'));
+    if (!outputFileSystem.existsSync(absoluteEntryBundleName + '.map')) {
+      throw new Error('Bundle map file does not exist.');
+    }
+
+    const bundleCode = outputFileSystem.readFileSync(absoluteEntryBundleName, 'utf-8');
+
+    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryBundleName + '.map', 'utf-8'));
 
     callback({
       bundleCode,

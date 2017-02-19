@@ -62,7 +62,6 @@ $ curl http://127.0.0.1:8000/
     * [High-level abstraction](#isomorphic-webpack-setup-high-level-abstraction)
         * [API](#isomorphic-webpack-setup-high-level-abstraction-api)
         * [Isomorphic webpack configuration](#isomorphic-webpack-setup-high-level-abstraction-isomorphic-webpack-configuration)
-    * [Low-level abstraction](#isomorphic-webpack-setup-low-level-abstraction)
 * [Handling errors](#isomorphic-webpack-handling-errors)
 * [Reading list](#isomorphic-webpack-reading-list)
 * [FAQ](#isomorphic-webpack-faq)
@@ -116,7 +115,8 @@ type IsomorphicWebpackType = {|
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
   +compiler: Compiler,
-  +evalCode: Function,
+  +createCompilationPromise: Function,
+  +evalBundleCode: Function,
   +formatErrorStack: Function
 |};
 
@@ -156,77 +156,6 @@ createIsomorphicWebpack(webpackConfiguration: WebpackConfigurationType, isomorph
 ```
 
 If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
-
-<a name="isomorphic-webpack-setup-low-level-abstraction"></a>
-### Low-level abstraction
-
-> This section of the documentation is included for transparency purposes only.
-> If you are planning on using the low-level abstraction, please take time to
-> open an issue and discuss your use case. If it is a generic use case,
-> I will be happy to add it to the high-level abstraction.
-
-```js
-import {
-  createCompiler,
-  createCompilerCallback,
-  createCompilerConfiguration,
-  isRequestResolvable,
-  resolveRequest,
-  runCode
-} from 'isomorphic-webpack';
-import overrideRequire from 'override-require';
-
-export default (webpackConfiguration) => {
-  // Use existing webpack configuration to create a new configuration
-  // that enables DllPlugin (Dynamically Linked Library) plugin.
-  const compilerConfiguration = createCompilerConfiguration(webpackConfiguration);
-
-  // Create a webpack compiler that uses in-memory file system.
-  //
-  // The sole purpose of using in-memory file system is to avoid
-  // the overhead of disk write.
-  const compiler = createCompiler(compilerConfiguration);
-
-  let restoreOriginalRequire;
-
-  // Create a callback for the consumption of the compiler.
-  //
-  // The callback function provided to the `createCompilerCallback`
-  // is invoked on each successful compilation.
-  //
-  // `createCompilerCallback` callback is invoked with an object
-  // that describes the resulting bundle code and a map of modules.
-  const compilerCallback = createCompilerCallback(compiler, ({bundleCode, requestMap}) => {
-  // Execute the code in the bundle.
-    const webpackRequire = runCode(bundleCode);
-
-    // Setup a callback used to determine whether a specific `require` invocation
-    // needs to be overridden.
-    const isOverride = (request, parent) => {
-      return isRequestResolvable(compiler.options.context, requestMap, request, parent.filename);
-    };
-
-    // Setup a callback used to override `require` invocation.
-    const resolveOverride = (request, parent) => {
-    	// Map request to the module ID.
-      const matchedRequest = resolveRequest(compiler.options.context, requestMap, request, parent.filename);
-      const moduleId = requestMap[matchedRequest];
-
-      return webpackRequire(moduleId);
-    };
-
-    if (restoreOriginalRequire) {
-      restoreOriginalRequire();
-    }
-
-    // Setup
-    restoreOriginalRequire = overrideRequire(isOverride, resolveOverride);
-  });
-
-  compiler.watch({}, compilerCallback);
-};
-```
-
 
 <a name="isomorphic-webpack-handling-errors"></a>
 ## Handling errors
@@ -269,6 +198,7 @@ Note: References to a generated code that cannot be resolved in a source map are
 ## Reading list
 
 * [Developing isomorphic applications using webpack](https://medium.com/@gajus/developing-isomorphic-applications-using-webpack-eca814a418ad#.17l1qc77j). Introduction to `isomorphic-webpack`, how to use webpack loaders and dependencies that depend on the browser environment.
+* [isomorphic-webpack - Universal module consumption using webpack - Interview with Gajus Kuizinas](http://survivejs.com/blog/isomorphic-webpack-interview/).
 
 <a name="isomorphic-webpack-faq"></a>
 ## FAQ
@@ -489,9 +419,9 @@ app.get('/', isomorphicMiddleware);
 |Server-side hot reloading of modules.|✅|✅|✅|
 |Supports stack trace.|✅|❌|❌|
 |Prevents serving stale data.|✅|❌|❌|
-|Overrides Node.js `require()`.|✅|✅|❌|
-|Uses webpack [`target: "node"`](https://webpack.github.io/docs/configuration.html#target).|❌|❌|✅|
-|Provides [low-level API](https://github.com/gajus/isomorphic-webpack#isomorphic-webpack-setup-low-level-abstraction).|✅|❌|❌|
+|Does not override Node.js `require()`.|✅|❌|✅|
+|Uses webpack [`target: "node"`](https://webpack.github.io/docs/configuration.html#target).|✅|❌|✅|
+|Provides [low-level API](./.README/LOW-LEVEL_ABSTRACTION.md).|✅|❌|❌|
 
 From a subjective perspective, `isomorphic-webpack` is a lot easier to setup than any of the existing alternatives.
 

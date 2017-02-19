@@ -204,9 +204,9 @@ app.get('/', isomorphicMiddleware);
 |Server-side hot reloading of modules.|✅|✅|✅|
 |Supports stack trace.|✅|❌|❌|
 |Prevents serving stale data.|✅|❌|❌|
-|Overrides Node.js `require()`.|✅|✅|❌|
-|Uses webpack [`target: "node"`](https://webpack.github.io/docs/configuration.html#target).|❌|❌|✅|
-|Provides [low-level API](https://github.com/gajus/isomorphic-webpack#isomorphic-webpack-setup-low-level-abstraction).|✅|❌|❌|
+|Does not override Node.js `require()`.|✅|❌|✅|
+|Uses webpack [`target: "node"`](https://webpack.github.io/docs/configuration.html#target).|✅|❌|✅|
+|Provides [low-level API](./.README/LOW-LEVEL_ABSTRACTION.md).|✅|❌|❌|
 
 From a subjective perspective, `isomorphic-webpack` is a lot easier to setup than any of the existing alternatives.
 
