@@ -1,16 +1,16 @@
 // @flow
 
-// eslint-disable-next-line flowtype/no-weak-types
-type IsRequireOverrideType = (request: Object, parent?: Object) => boolean;
+/**
+ * @see https://webpack.github.io/docs/configuration.html#entry
+ */
+export type WebpackEntryConfigurationType = string | Array<string> | {[key: string]: string | Array<string>};
 
 export type UserIsomorphicWebpackConfigurationType = {
-  isRequireOverride?: IsRequireOverrideType,
-  nodeExternalsWhitelist?: Array<string | RegExp>,
-  useCompilationPromise?: boolean
+  +nodeExternalsWhitelist?: Array<string | RegExp>,
+  +useCompilationPromise?: boolean
 };
 
 export type IsomorphicWebpackConfigurationType = {|
-  +isRequireOverride?: IsRequireOverrideType,
   +nodeExternalsWhitelist: Array<string | RegExp>,
   +useCompilationPromise: boolean
 |};

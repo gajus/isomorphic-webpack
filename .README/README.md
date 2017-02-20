@@ -89,7 +89,8 @@ type IsomorphicWebpackType = {|
    * @see https://webpack.github.io/docs/node.js-api.html#compiler
    */
   +compiler: Compiler,
-  +evalCode: Function,
+  +createCompilationPromise: Function,
+  +evalBundleCode: Function,
   +formatErrorStack: Function
 |};
 
@@ -104,10 +105,6 @@ createIsomorphicWebpack(webpackConfiguration: WebpackConfigurationType, isomorph
 ```
 
 If you have a requirement for a configuration, [raise an issue](https://github.com/gajus/isomorphic-webpack/issues/new?title=configuration%20request:&body=configuration%20name:%0aconfiguration%20use%20case:%0adefault%20value:) describing your use case.
-
-### Low-level abstraction
-
-{"gitdown": "include", "file": "./LOW-LEVEL_ABSTRACTION.md"}
 
 ## Handling errors
 

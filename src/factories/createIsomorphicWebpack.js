@@ -1,9 +1,9 @@
 // @flow
 
+import path from 'path';
 import {
   Compiler
 } from 'webpack';
-import overrideRequire from 'override-require';
 import {
   SourceMapConsumer
 } from 'source-map';
@@ -11,9 +11,8 @@ import createDebug from 'debug';
 import type {
   UserIsomorphicWebpackConfigurationType
 } from '../types';
-import isRequestResolvable from '../utilities/isRequestResolvable';
-import resolveRequest from '../utilities/resolveRequest';
 import evalCodeInBrowser from '../utilities/evalCodeInBrowser';
+import getEntryScriptPath from '../utilities/getEntryScriptPath';
 import createCompiler from './createCompiler';
 import createCompilerCallback from './createCompilerCallback';
 import createCompilerConfiguration from './createCompilerConfiguration';
@@ -28,14 +27,14 @@ type IsomorphicWebpackType = {|
    */
   compiler: Compiler,
   createCompilationPromise: Function,
-  evalCode: Function,
+  evalBundleCode: Function,
   formatErrorStack: Function
 |};
 
 type ErrorPositionType = {|
-  column: number,
-  line: number,
-  source: string
+  +column: number,
+  +line: number,
+  +source: string
 |};
 
 export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration?: UserIsomorphicWebpackConfigurationType): IsomorphicWebpackType => {
@@ -84,41 +83,30 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     };
   }
 
-  let restoreOriginalRequire;
   let bundleSourceMapConsumer;
 
   let currentBundleCode;
   let currentRequestMap;
 
-  const evalCode = (windowUrl?: string) => {
-    const module = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
+  const evalBundleCode = (windowUrl?: string) => {
+    const requireModule = evalCodeInBrowser(currentBundleCode, {}, windowUrl);
 
-    const isOverride = (request, parent) => {
-      const override = isRequestResolvable(compiler.options.context, currentRequestMap, request, parent.filename);
+    const entryScriptPath = getEntryScriptPath(compiler.options.entry);
 
-      if (override) {
-        const matchedRequest = resolveRequest(compiler.options.context, currentRequestMap, request, parent.filename);
+    debug('entryScriptPath', entryScriptPath);
 
-        if (isomorphicWebpackConfiguration.isRequireOverride && !isomorphicWebpackConfiguration.isRequireOverride(matchedRequest)) {
-          return false;
-        }
-      }
+    // @todo Make it work in Windows.
+    const relativeEntryScriptPath = './' + path.relative(webpackConfiguration.context, require.resolve(entryScriptPath));
 
-      return override;
-    };
+    const moduleId = currentRequestMap[relativeEntryScriptPath];
 
-    const resolveOverride = (request, parent) => {
-      const matchedRequest = resolveRequest(compiler.options.context, currentRequestMap, request, parent.filename);
-      const moduleId = currentRequestMap[matchedRequest];
-
-      return module(moduleId);
-    };
-
-    if (restoreOriginalRequire) {
-      restoreOriginalRequire();
+    if (typeof moduleId !== 'number') {
+      throw new Error('Cannot determine entry module ID.');
     }
 
-    restoreOriginalRequire = overrideRequire(isOverride, resolveOverride);
+    debug('evaluating module ID %i', moduleId);
+
+    return requireModule(moduleId);
   };
 
   const compilerCallback = createCompilerCallback(compiler, ({
@@ -129,8 +117,6 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     bundleSourceMapConsumer = new SourceMapConsumer(bundleSourceMap);
     currentBundleCode = bundleCode;
     currentRequestMap = requestMap;
-
-    evalCode();
   });
 
   compiler.watch({}, compilerCallback);
@@ -158,7 +144,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   };
 
   const formatErrorStack = (errorStack: string): string => {
-    return errorStack.replace(/\(isomorphic-webpack:(\d+):(\d+)\)/g, (match, lineNumber, columnNumber) => {
+    return errorStack.replace(/isomorphic-webpack:(\d+):(\d+)/g, (match, lineNumber, columnNumber) => {
       const targetLineNumber = Number(lineNumber);
       const targetColumnNumber = Number(columnNumber);
 
@@ -168,14 +154,14 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
 
       const originalPosition = getOriginalPosition(targetLineNumber, targetColumnNumber);
 
-      return '(' + originalPosition.source + ':' + originalPosition.line + ':' + originalPosition.column + ')';
+      return originalPosition.source + ':' + originalPosition.line + ':' + originalPosition.column;
     });
   };
 
   return {
     compiler,
     createCompilationPromise,
-    evalCode,
+    evalBundleCode,
     formatErrorStack
   };
 };

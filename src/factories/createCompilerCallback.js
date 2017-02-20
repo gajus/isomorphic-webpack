@@ -7,6 +7,7 @@ import {
 } from 'webpack';
 import createDebug from 'debug';
 import findInstance from '../utilities/findInstance';
+import getBundleName from '../utilities/getBundleName';
 import createResourceMap from './createResourceMap';
 
 const debug = createDebug('isomorphic-webpack');
@@ -38,6 +39,10 @@ export default (compiler: Compiler, callback: Function): Function => {
       return;
     }
 
+    if (!outputFileSystem.existsSync(manifestPath)) {
+      throw new Error('Manifest file does not exist.');
+    }
+
     const manifest = JSON.parse(outputFileSystem.readFileSync(manifestPath));
 
     debug('manifest', manifest);
@@ -46,37 +51,35 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    let entryChunkName;
+    const bundleName = getBundleName(compiler.options.entry);
 
-    if (Array.isArray(compiler.options.entry)) {
-      entryChunkName = 'main';
-    } else {
-      const bundleNames = Object.keys(compiler.options.entry);
+    debug('bundleName', bundleName);
 
-      if (bundleNames.length === 0) {
-        throw new Error('Invalid "entry" configuration.');
-      } else if (bundleNames.length > 1) {
-        // eslint-disable-next-line no-console
-        console.log('Multiple bundles are not supported. See https://github.com/gajus/isomorphic-webpack/issues/10.');
+    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName + '.js');
 
-        throw new Error('Unsupported "entry" configuration.');
-      }
-
-      entryChunkName = bundleNames[0];
+    if (!outputFileSystem.existsSync(absoluteEntryBundleName)) {
+      throw new Error('Bundle file does not exist.');
     }
 
-    let formattedOutputName = entryChunkName;
+// <<<<<<< HEAD
+//     let formattedOutputName = entryChunkName;
 
-    if (compiler && compiler.options && compiler.options.output && compiler.options.output.filename) {
-      formattedOutputName = compiler.options.output.filename.replace('[name]', entryChunkName);
+//     if (compiler && compiler.options && compiler.options.output && compiler.options.output.filename) {
+//       formattedOutputName = compiler.options.output.filename.replace('[name]', entryChunkName);
+//     }
+
+//     const absoluteEntryChunkName = path.resolve(compiler.options.output.path, formattedOutputName);
+
+//     debug('absoluteEntryChunkName', absoluteEntryChunkName);
+//     const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
+// =======
+    if (!outputFileSystem.existsSync(absoluteEntryBundleName + '.map')) {
+      throw new Error('Bundle map file does not exist.');
     }
 
-    const absoluteEntryChunkName = path.resolve(compiler.options.output.path, formattedOutputName);
+    const bundleCode = outputFileSystem.readFileSync(absoluteEntryBundleName, 'utf-8');
 
-    debug('absoluteEntryChunkName', absoluteEntryChunkName);
-    const bundleCode = outputFileSystem.readFileSync(absoluteEntryChunkName, 'utf-8');
-
-    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryChunkName + '.map', 'utf-8'));
+    const bundleSourceMap = JSON.parse(outputFileSystem.readFileSync(absoluteEntryBundleName + '.map', 'utf-8'));
 
     callback({
       bundleCode,

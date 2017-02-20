@@ -11,7 +11,7 @@ export default (webpackConfiguration: Object, nodeExternalsWhitelist: Array<stri
   const manifestPath = path.resolve(webpackConfiguration.context, 'manifest.json');
 
   const compilerConfiguration = webpackMerge(webpackConfiguration, {
-    devtool: 'sourcemap',
+    devtool: 'hidden-source-map',
     externals: [
       nodeExternals({
         importType: 'commonjs2',
