@@ -7,7 +7,6 @@ import {
 } from 'webpack';
 import createDebug from 'debug';
 import findInstance from '../utilities/findInstance';
-import getBundleName from '../utilities/getBundleName';
 import createResourceMap from './createResourceMap';
 
 const debug = createDebug('isomorphic-webpack');
