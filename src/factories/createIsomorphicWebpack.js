@@ -88,7 +88,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
   let currentBundleCode;
   let currentRequestMap;
 
-  const evalBundleCode = (windowUrl?: string, customContext?: object) => {
+  const evalBundleCode = (windowUrl?: string, customContext?: {}) => {
     const requireModule = evalCodeInBrowser(currentBundleCode, {}, windowUrl, customContext);
 
     const entryScriptPath = getEntryScriptPath(compiler.options.entry);
