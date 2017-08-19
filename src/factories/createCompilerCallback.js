@@ -51,11 +51,11 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    const bundleName = getBundleName(compiler.options.entry);
+    const bundleName = stats.compilation.chunks[0].files[0];
 
     debug('bundleName', bundleName);
 
-    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName + '.js');
+    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName);
 
     if (!outputFileSystem.existsSync(absoluteEntryBundleName)) {
       throw new Error('Bundle file does not exist.');
