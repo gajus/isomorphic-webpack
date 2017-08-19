@@ -14,7 +14,7 @@ type RunInNewContextType = {
 /**
  * Runs code and returns the value of the last expression evaluated.
  */
-export default (code: string, userOptions: RunInNewContextType = {}, windowUrl?: string, customContext?: object): any => {
+export default (code: string, userOptions: RunInNewContextType = {}, windowUrl?: string, customContext?: {}): any => {
   const window = jsdom.jsdom('<html><body></body></html>').defaultView;
 
   if (windowUrl) {
