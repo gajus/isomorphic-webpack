@@ -50,7 +50,8 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    const bundleName = stats.compilation.chunks[0].files[0];
+    const files = stats.compilation.chunks[0].files.find(x => /\.js$/.test(x));
+    const bundleName = jsFiles[jsFiles.length - 1];
 
     debug('bundleName', bundleName);
 
