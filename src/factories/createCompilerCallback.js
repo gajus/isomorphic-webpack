@@ -7,7 +7,6 @@ import {
 } from 'webpack';
 import createDebug from 'debug';
 import findInstance from '../utilities/findInstance';
-import getBundleName from '../utilities/getBundleName';
 import createResourceMap from './createResourceMap';
 
 const debug = createDebug('isomorphic-webpack');
@@ -51,11 +50,14 @@ export default (compiler: Compiler, callback: Function): Function => {
 
     debug('requestMap', requestMap);
 
-    const bundleName = getBundleName(compiler.options.entry);
+    const files = stats.compilation.chunks[0].files.find((file) => {
+      return /\.js$/.test(file);
+    });
+    const bundleName = files[files.length - 1];
 
     debug('bundleName', bundleName);
 
-    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName + '.js');
+    const absoluteEntryBundleName = path.resolve(compiler.options.output.path, bundleName);
 
     if (!outputFileSystem.existsSync(absoluteEntryBundleName)) {
       throw new Error('Bundle file does not exist.');

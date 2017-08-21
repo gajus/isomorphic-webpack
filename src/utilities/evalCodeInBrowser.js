@@ -14,26 +14,30 @@ type RunInNewContextType = {
 /**
  * Runs code and returns the value of the last expression evaluated.
  */
-export default (code: string, userOptions: RunInNewContextType = {}, windowUrl?: string): any => {
+export default (code: string, userOptions: RunInNewContextType = {}, windowUrl?: string, customContext?: {}): any => {
   const window = jsdom.jsdom('<html><body></body></html>').defaultView;
 
   if (windowUrl) {
     jsdom.changeURL(window, windowUrl);
   }
 
-  const sandbox = {
-    console,
-    document: window.document,
-    ISOMORPHIC_WEBPACK: true,
-    process: {
-      env: {
-        // eslint-disable-next-line no-process-env
-        NODE_ENV: process.env.NODE_ENV
-      }
+  const sandbox = Object.assign(
+    {},
+    {
+      console,
+      document: window.document,
+      ISOMORPHIC_WEBPACK: true,
+      process: {
+        env: {
+          // eslint-disable-next-line no-process-env
+          NODE_ENV: process.env.NODE_ENV
+        }
+      },
+      require,
+      window
     },
-    require,
-    window
-  };
+    customContext
+  );
 
   const options = {
     displayErrors: true,
