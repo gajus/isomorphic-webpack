@@ -96,7 +96,7 @@ export default (webpackConfiguration: Object, userIsomorphicWebpackConfiguration
     debug('entryScriptPath', entryScriptPath);
 
     // @todo Make it work in Windows.
-    const relativeEntryScriptPath = './' + path.relative(webpackConfiguration.context, require.resolve(entryScriptPath));
+    const relativeEntryScriptPath = './' + path.relative(webpackConfiguration.context, require.resolve(entryScriptPath)).replace(/[\\]+/g, '/');
 
     const moduleId = currentRequestMap[relativeEntryScriptPath];
 
